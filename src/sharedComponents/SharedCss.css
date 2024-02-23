@@ -1,0 +1,17 @@
+.navbar{
+display: flex;
+background-color: black;
+color: azure;
+
+>ul{
+  list-style-type: none;
+  display: flex;
+
+  >li{
+    margin-left: 30px;
+  }
+
+}
+
+
+}
