@@ -10,14 +10,18 @@ import Footer from "./sharedComponents/Footer";
 const App = () => {
   return (
     <>
+
+
       <BrowserRouter>
-        <Navbar />       
+
+   
+        <Navbar />           
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/About" element={<About />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/about" element={<About />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
 
         <Footer />

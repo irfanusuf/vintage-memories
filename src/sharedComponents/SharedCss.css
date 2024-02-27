@@ -1,17 +1,33 @@
-.navbar{
-display: flex;
-background-color: black;
-color: azure;
-
->ul{
-  list-style-type: none;
+.navbar {
   display: flex;
+  background-color: black;
+  color: azure;
 
-  >li{
-    margin-left: 30px;
+  > ul {
+    list-style-type: none;
+    display: flex;
+
+    > li {
+      margin-left: 30px;
+
+      > a {
+        color: aliceblue;
+        text-decoration: none;
+        font-size: 18px;
+      }
+    }
   }
-
 }
 
+.footer {
+  background-color: black;
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  > p {
+    margin: 0;
+  }
 }

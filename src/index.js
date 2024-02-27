@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 
 
-root.render(<App/>)
+root.render(<App/>)       //  what is app .........it is a function based react component 
 
 
 
