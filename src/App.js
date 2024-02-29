@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Navbar from "./sharedComponents/Navbar";
 import Footer from "./sharedComponents/Footer";
+import SecureHome from "./components/SecureHome";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/secure-home" element={<SecureHome />} />
         </Routes>
 
         <Footer />

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "../styles/Register.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -11,34 +14,33 @@ const Register = () => {
     username: "",
   });
 
-
-  const [message , setMessage] = useState("")
-
-  // const handleEye = ()=>{
-  //   setShowPass(!showPass)
-
-  // }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevInput) => ({ ...prevInput, [name]: value }));
+  };
 
   const handleRegister = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const giveMePromise = await axios.post(
         "http://localhost:4000/user/register",
         formData
       );
-    
 
-
-      
-
-
-      console.log(giveMePromise)
-
-
-
-
+      if (giveMePromise.data.message === "user created") {
+        setMessage("User created SuccesFully!");
+        // Form Sanitization
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+        });
+        navigate("/login");
+      } else {
+        setMessage(giveMePromise.data.message);
+      }
     } catch (err) {
-      setMessage("Network Error ")
+      setMessage("Network Error ");
       console.log(err);
     }
   };
@@ -48,16 +50,15 @@ const Register = () => {
       <div className="container">
         <h1> Register</h1>
 
-        <form >
+        <form>
           <label>
             Username
             <input
               type="text"
+              name="username" //key
               placeholder="Enter your Username here "
               value={formData.username}
-              onChange={(e) => {
-                setFormData(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </label>
 
@@ -67,11 +68,10 @@ const Register = () => {
             Email
             <input
               type="email"
+              name="email" //key
               placeholder="Enter your email here "
               value={formData.email}
-              onChange={(e) => {
-                setFormData(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </label>
           <br />
@@ -80,14 +80,13 @@ const Register = () => {
             PassWord
             <input
               type={showPass ? "text" : "password"}
+              name="password" //key
               placeholder="Enter your Pass here "
               value={formData.password}
-              onChange={(e) => {
-                setFormData(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </label>
-<p> {message}   </p>
+          <p> {message} </p>
           <button onClick={handleRegister}> Submit </button>
         </form>
       </div>
