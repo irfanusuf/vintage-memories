@@ -39,7 +39,7 @@ const Register = () => {
         });
 
     
-        // navigate("/secure-home");
+        navigate("/posts");
       } else {
         setMessage(giveMePromise.data.message);
       }

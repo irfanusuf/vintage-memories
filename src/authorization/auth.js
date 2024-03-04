@@ -6,12 +6,11 @@ const AuthenticatedUser = async () => {
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    
 
-    if (!token) {
+    if (token === null) {
       navigate("/login");
     }
-  }, []);
+  }, [token]);
 };
 
 export default AuthenticatedUser;

@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import Navbar from "./sharedComponents/Navbar";
 import Footer from "./sharedComponents/Footer";
 import SecureHome from "./components/SecureHome";
+import GetAllPosts from "./postComponents/GetAllPosts";
+
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/secure-home" element={<SecureHome />} />
+          <Route path="/posts" element={<GetAllPosts/>} />
+        
         </Routes>
 
         <Footer />
