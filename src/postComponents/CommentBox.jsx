@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import Loader from "../sharedComponents/Loader";
 
 const CommentBox = (props) => {
   return (
-    <div>
-      <h2>Comments</h2>
-      <div>
-        {props.data.map((item) => (
-          <p> {item.comments.map((param) => param.comment)} </p>
-        ))}
-      </div>
-    </div>
+    <>
+     <div className="comments">
+       <h2>Comments</h2>
+        {props.selectedPost === props.item._id ? (
+          <div>
+            {props.item.comments.map((comment, index) => (
+              <div key={index} className="comment">
+                <b> {comment.user.username} : </b>
+                <span> {comment.comment}</span>
+              </div>
+            ))}
+          </div>
+        ) : (<Loader/>)}
+     </div>
+       
+      
+      </>
   );
 };
 
