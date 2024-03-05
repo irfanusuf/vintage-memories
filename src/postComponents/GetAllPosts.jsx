@@ -9,33 +9,18 @@ import CommentBox from "./CommentBox";
 import AuthenticatedUser from "../authorization/auth";
 
 const GetAllPosts = () => {
-
-
-  AuthenticatedUser()
+  AuthenticatedUser();
 
   const [data, setData] = useState([]);
   const [heart, setHeart] = useState(false);
   const [comment, setComment] = useState(false);
 
 
-  const postId = "hnusduyufsiu"
   const handleHeart = () => {
-
-    try{
-
-      
-
-
-      const res = axios.post(`http://localhost:4000/post/likes?postId=${postId}` ,
-      {headers : token}
-
-      )
-     setHeart(!heart);
-    }catch(err){
-
-
-    }
+    try {
     
+      setHeart(!heart);
+    } catch (err) {}
   };
 
   const handleComment = () => {
@@ -73,7 +58,8 @@ const GetAllPosts = () => {
               <div className="icons">
                 <span onClick={handleHeart}>
                   {" "}
-                { heart ?   <FaRegHeart />  : <FaHeart/>} {item.likeCounts.length}{" "}
+                  {heart ? <FaRegHeart /> : <FaHeart />}{" "}
+                  {item.likeCounts.length}{" "}
                 </span>
 
                 <span onClick={handleComment}>
@@ -92,7 +78,6 @@ const GetAllPosts = () => {
         </div>
 
         <div className="container-right">
-          
           {comment && <CommentBox data={data} />}
         </div>
       </div>
