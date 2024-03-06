@@ -8,30 +8,62 @@
     color: aliceblue;
   }
 
-  > .main-centre {
+  > .loading {
     display: flex;
-    margin-left: 350px;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  }
 
-    > .container {
+  > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+
+    > .card {
+      background-color: rgb(0, 0, 0);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      width: 90%;
+      border-radius: 10px;
 
-      > .card {
+      > .post {
         color: aliceblue;
-        background-color: black;
         width: 800px;
         display: flex;
         flex-direction: column;
         margin: 30px 0;
+        margin-left: 300px;
         border: 1px solid black;
         padding: 10px;
         border-radius: 5px;
 
+        > .heading {
+          display: flex;
+          align-items: center;
+
+          > .profile-pic {
+            width: 30px;
+            height: 30px;
+            border: 2px solid white;
+            border-radius: 50%;
+            margin-right: 10px;
+          }
+        }
+
         > .icons {
           margin-top: 10px;
+          > span {
+            margin-right: 15px;
+            cursor: pointer;
+          }
+        }
+
+        > .counts {
           margin-bottom: 10px;
+          > span {
+            margin-right: 20px;
+          }
         }
 
         > img {
@@ -40,19 +72,37 @@
         }
       }
     }
+  }
+}
 
-    > .container-right {
-      position: fixed;
-       left: 1200px;
-      width: 250px;
-      height: 300px;
-      margin-top: 30px;
-      background-color: azure;
-      border-radius: 5px;
-      padding: 30px;
+.comments {
+  color: aliceblue;
+  margin-top: 50px;
+  width: 400px;
+  height: 300px;
+  border-radius: 5px;
+  padding: 0px 10px;
 
-      > h2 {
-        text-align: center;
+  > h2 {
+    text-align: left;
+  }
+
+  > div {
+    > .comment {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+
+      > .profile-pic {
+        width: 30px;
+        height: 30px;
+        border: 2px solid white;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+
+      >span{
+        
       }
     }
   }
