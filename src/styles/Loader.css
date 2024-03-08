@@ -1,26 +1,27 @@
-.loader {
 
+.loader{
 
-    
-width: 30px;
-height: 30px;
-border: 5px solid white;
-border-radius: 50%;
-border-top: 5px solid green;
-animation: spin 1s linear infinite;
-margin: 50px auto;
-
-
+ width: 30px;
+ height: 30px;
+ border: 5px solid white;
+ border-top: 5px solid rgb(205, 10, 10);
+ border-radius: 50%;
+ animation: spin 0.4s linear infinite;
+ margin: auto;
 
 }
 
 
-
 @keyframes spin {
-    0% {
-     rotate : 0deg
-    }
-    100% {
-     rotate : 360deg
-    }
+  
+  0% {
+  transform: rotate(0deg);
   }
+  100%{
+    transform: rotate(360deg);
+  }
+  
+
+}
+
+

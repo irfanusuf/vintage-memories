@@ -2,6 +2,7 @@ import React from "react";
 import Loader from "../sharedComponents/Loader";
 import { FaHeart } from "react-icons/fa";
 
+
 const CommentBox = (props) => {
   return (
     <>
