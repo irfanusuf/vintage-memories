@@ -7,10 +7,12 @@ const AuthenticatedUser = async () => {
 
   useEffect(() => {
 
-    if (token === null) {
+    if (token === "") {
       navigate("/login");
     }
-  }, [token]);
+  }, [token , navigate]);
+
+   
 };
 
 export default AuthenticatedUser;

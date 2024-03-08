@@ -9,11 +9,10 @@ import CommentBox from "./CommentBox";
 import AuthenticatedUser from "../authorization/auth";
 
 const GetAllPosts = () => {
-  // AuthenticatedUser()
+  AuthenticatedUser();
 
   const [data, setData] = useState([]);
   const [heart, setHeart] = useState(false);
-  // const [likedPosts, setLikedPosts] = useState({});
   const [showComment, setShowComment] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -22,43 +21,39 @@ const GetAllPosts = () => {
     setSelectedPost(postId);
   };
 
-  const handleLike = async (postId) => {
-    const token = sessionStorage.getItem("token");
-    const response = await axios.post(
-      `http://localhost:4000/post/likes?postId=${postId}`, {} ,
-      {
-        headers: {
-          token: token,
-        }
-      }
-    );
- 
-    if (response.status === 200) {
-      localStorage.setItem(`liked_${postId}`, 'true');
-      setHeart(!heart);
-    }
-  };
-
-
-
-  // const checkIfLiked = (postId) => {
-  //   const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
-  //   // Update the likedPosts state object
-  //   setLikedPosts(prevLikedPosts => ({
-  //     ...prevLikedPosts,
-  //     [postId]: isLiked,
-  //   }));
-  // };
-
   const checkIfLiked = (postId) => {
-    
-    console.log("meow")
-    const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
+    const isLiked = localStorage.getItem(`liked_${postId}`) === "true";
     if (isLiked) {
       setHeart(true);
     }
   };
-  
+
+  useEffect(() => {
+    data.forEach((post) => {
+      checkIfLiked(post._id);
+    });
+  }, [data]);
+
+  const handleLike = async (postId) => {
+    const token = sessionStorage.getItem("token");
+    const response = await axios.post(
+      `http://localhost:4000/post/likes?postId=${postId}`,
+      {},
+      {
+        headers: {
+          token: token,
+        },
+      }
+    );
+
+    if (response.data.message === "U Liked This Post!") {
+      setHeart(true);
+      localStorage.setItem(`liked_${postId}`, "true");
+    } else if (response.data.message === "U took back ur like!") {
+      setHeart(false);
+      localStorage.removeItem(`liked_${postId}`);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -71,52 +66,58 @@ const GetAllPosts = () => {
     }
   };
 
-useEffect(()=>{
-
-  data.forEach(item => {
-    checkIfLiked(item._id);
-  });
-
-},[data])
-
-
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [heart]);
 
   return (
     <div className="main">
       <h1> Explore </h1>
 
       <div className="container">
-        {data.map((item) => (
+        {data.map((post) => (
           <div className="card">
+
+
+            <div className="likes"> <h2> Likes</h2></div>
+
+
             <div className="post">
               <div className="heading">
                 <div className="profile-pic"> </div>{" "}
                 <b>
-                  {item && item.author
-                    ? item.author.username.toUpperCase()
+                  {post && post.author
+                    ? post.author.username
                     : "Default Author"}
                 </b>
               </div>
               <b style={{ marginLeft: "45px" }}>
-                {item && item.title ? item.title.toUpperCase() : null}
+                {post && post.title ? post.title.toUpperCase() : null}
               </b>
-              <img src={item.imageUrl} alt="preview" />
+              <img
+                onDoubleClick={() => {
+                  handleLike(post._id);
+                }}
+                src={post.imageUrl}
+                alt="preview"
+              />
 
               <div className="icons">
                 <span
                   onClick={() => {
-                    handleLike(item._id);
+                    handleLike(post._id);
                   }}
                 >
-                  {heart ? <FaHeart style={{color:"red"}}/> :<FaRegHeart /> }
+                  {heart ? (
+                    <FaHeart style={{ color: "red" }} />
+                  ) : (
+                    <FaRegHeart />
+                  )}
                 </span>
 
                 <span
                   onClick={() => {
-                    handleComment(item._id);
+                    handleComment(post._id);
                   }}
                 >
                   <LuMessageCircle />
@@ -127,15 +128,15 @@ useEffect(()=>{
               </div>
 
               <div className="counts">
-                <span>{item.likeCounts.length}</span>
-                <span>{item.comments.length}</span>
-                <span>{item.shareCounts.length}</span>
+                <span>{post.likeCounts.length}</span>
+                <span>{post.comments.length}</span>
+                <span>{post.shareCounts.length}</span>
               </div>
 
-              <b> {item.caption}</b>
+              <b> {post.caption}</b>
             </div>
 
-            <CommentBox item={item} selectedPost={selectedPost} />
+            <CommentBox post={post} selectedPost={selectedPost} />
           </div>
         ))}
       </div>
