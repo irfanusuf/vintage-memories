@@ -17,7 +17,9 @@ const GetAllPosts = () => {
   // const [likedPosts, setLikedPosts] = useState({});
   const [showComment, setShowComment] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [loading , setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
+  const [noPosts , setNoPosts] = useState(false)
 
   const handleComment = (param) => {
     setShowComment(!showComment);
@@ -29,7 +31,7 @@ const GetAllPosts = () => {
 
     const response = await axios.post(
       `http://localhost:4000/post/likes?postId=${postId}`,
-      {},  // empty form 
+      {}, // empty form
       {
         headers: {
           token: token,
@@ -63,13 +65,15 @@ const GetAllPosts = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get("http://localhost:4000/posts");
+
       if (res.data.message === "Posts Found!") {
-        console.log(res.data.allposts)
         setData(res.data.allposts);
-        setLoading(false)
-        
+        setLoading(false); 
+
+        if (res.data.allposts.length === 0) {
+          setNoPosts(true);
+        }
       }
-     
     } catch (err) {
       console.log(err);
     }
@@ -89,66 +93,74 @@ const GetAllPosts = () => {
     <div className="main">
       <h1> Explore </h1>
 
-      {loading ? <div className="loading"><Loader/> </div>  :
-      <div className="container">
-        {data.map((post) => (
-          <div className="card">
-            <div className="post">
-              <div className="heading">
-                <div className="profile-pic"></div>
+      {loading ? (
+        <div className="loading">
+          <Loader />{" "}
+        </div>
+      ) : (
 
-                <b>
-                  {post && post.author
-                    ? post.author.username
-                    : "Default Author"}
+        
+        <div className="container">
+          {noPosts && <div className="no-posts">No Posts available !</div>}
+          {data.map((post) => (
+            <div className="card">
+              <div className="post">
+                <div className="heading">
+                  <div className="profile-pic"></div>
+
+                  <b>
+                    {post && post.author
+                      ? post.author.username
+                      : "Default Author"}
+                  </b>
+                </div>
+
+                <b style={{ marginLeft: "45px" }}>
+                  {post && post.title ? post.title.toUpperCase() : null}
                 </b>
+
+                <img src={post.imageUrl} alt="preview" />
+
+                <div className="icons">
+                  <span
+                    onClick={() => {
+                      handleLike(post._id);
+                    }}
+                  >
+                    {heart ? (
+                      <FaHeart style={{ color: "red" }} />
+                    ) : (
+                      <FaRegHeart />
+                    )}
+                  </span>
+
+                  <span
+                    onClick={() => {
+                      handleComment(post._id);
+                    }}
+                  >
+                    <LuMessageCircle />
+                  </span>
+
+                  <span>
+                    <FaShare />
+                  </span>
+                </div>
+
+                <div className="counts">
+                  <span>{post.likeCounts.length}</span>
+                  <span>{post.comments.length}</span>
+                  <span>{post.shareCounts.length}</span>
+                </div>
+
+                <b> {post.caption}</b>
               </div>
 
-              <b style={{ marginLeft: "45px" }}>
-                {post && post.title ? post.title.toUpperCase() : null}
-              </b>
-
-              <img src={post.imageUrl} alt="preview" />
-
-              <div className="icons">
-                <span
-                  onClick={() => {
-                    handleLike(post._id);
-                  }}
-                >
-                  {heart ? (
-                    <FaHeart style={{ color: "red" }} />
-                  ) : (
-                    <FaRegHeart />
-                  )}
-                </span>
-
-                <span
-                  onClick={() => {
-                    handleComment(post._id);
-                  }}
-                >
-                  <LuMessageCircle />
-                </span>
-
-                <span>
-                  <FaShare />
-                </span>
-              </div>
-
-              <div className="counts">
-                <span>{post.likeCounts.length}</span>
-                <span>{post.comments.length}</span>
-                <span>{post.shareCounts.length}</span>
-              </div>
-
-              <b> {post.caption}</b>
+              <CommentBox post={post} selectedPost={selectedPost} />
             </div>
-
-            <CommentBox post={post} selectedPost={selectedPost} />
-          </div>
-        ))}
-      </div>}
+          ))}
+        </div>
+      )}
     </div>
   );
 };
