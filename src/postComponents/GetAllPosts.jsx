@@ -6,10 +6,10 @@ import { FaHeart } from "react-icons/fa6";
 import { LuMessageCircle } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
 import CommentBox from "./CommentBox";
-import AuthenticatedUser from "../authorization/auth";
+// import AuthenticatedUser from "../authorization/auth";
 
 const GetAllPosts = () => {
-  AuthenticatedUser();
+  // AuthenticatedUser();
 
   const [data, setData] = useState([]);
   const [heart, setHeart] = useState(false);
@@ -21,18 +21,21 @@ const GetAllPosts = () => {
     setSelectedPost(postId);
   };
 
-  const checkIfLiked = (postId) => {
-    const isLiked = localStorage.getItem(`liked_${postId}`) === "true";
-    if (isLiked) {
-      setHeart(true);
-    }
-  };
+  // const checkIfLiked = (postId) => {
+  //   const isLiked = localStorage.getItem(`likedPOst${postId}`);
+  
+  //  if(isLiked=== true ){
+   
+  //  }
+ 
+  // };
 
-  useEffect(() => {
-    data.forEach((post) => {
-      checkIfLiked(post._id);
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   data.forEach((post) => {
+  //     checkIfLiked(post._id);
+     
+  //   });
+  // }, [data]);
 
   const handleLike = async (postId) => {
     const token = sessionStorage.getItem("token");
@@ -46,12 +49,13 @@ const GetAllPosts = () => {
       }
     );
 
-    if (response.data.message === "U Liked This Post!") {
-      setHeart(true);
-      localStorage.setItem(`liked_${postId}`, "true");
-    } else if (response.data.message === "U took back ur like!") {
-      setHeart(false);
-      localStorage.removeItem(`liked_${postId}`);
+    if (response.data.message === `U Liked post _${postId}`) {
+      await localStorage.setItem(`likedPOst${postId}`, "true");
+      setHeart(true)
+     
+    } else if (response.data.message === `U unliked post_${postId}`) {
+      await localStorage.setItem(`likedPOst${postId}` ,"false");
+      setHeart(false)
     }
   };
 
@@ -60,6 +64,7 @@ const GetAllPosts = () => {
       const res = await axios.get("http://localhost:4000/posts");
       if (res.data.message === "Posts Found!") {
         setData(res.data.allposts);
+        console.log(res);
       }
     } catch (err) {
       console.log(err);
@@ -77,10 +82,10 @@ const GetAllPosts = () => {
       <div className="container">
         {data.map((post) => (
           <div className="card">
-
-
-            <div className="likes"> <h2> Likes</h2></div>
-
+            <div className="likes">
+              {" "}
+              <h2> Likes</h2>
+            </div>
 
             <div className="post">
               <div className="heading">
@@ -108,7 +113,7 @@ const GetAllPosts = () => {
                     handleLike(post._id);
                   }}
                 >
-                  {heart ? (
+                  {heart  ? (
                     <FaHeart style={{ color: "red" }} />
                   ) : (
                     <FaRegHeart />
