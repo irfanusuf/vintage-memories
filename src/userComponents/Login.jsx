@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Register.css";
+import "./Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,9 @@ const Register = () => {
   const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
     username: "",
+    password: "",
+   
   });
 
   const handleChange = (e) => {
@@ -19,23 +19,27 @@ const Register = () => {
     setFormData((prevInput) => ({ ...prevInput, [name]: value }));
   };
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const giveMePromise = await axios.post(
-        "http://localhost:4000/user/register",
+        "http://localhost:4000/user/login",
         formData
       );
 
-      if (giveMePromise.data.message === "user created") {
-        setMessage("User created SuccesFully!");
+      if (giveMePromise.data.message === "Logged In") {
+        const token = giveMePromise.data.token
+
+        await sessionStorage.setItem('token' , token )
+        setMessage("Logged in  SuccesFully!");
         // Form Sanitization
         setFormData({
           username: "",
-          email: "",
           password: "",
         });
-        navigate("/login");
+
+    
+        navigate("/");
       } else {
         setMessage(giveMePromise.data.message);
       }
@@ -48,7 +52,7 @@ const Register = () => {
   return (
     <div className="register-light">
       <div className="container">
-        <h1> Register</h1>
+        <h1> Login </h1>
 
         <form>
           <label>
@@ -64,17 +68,7 @@ const Register = () => {
 
           <br />
 
-          <label>
-            Email
-            <input
-              type="email"
-              name="email" //key
-              placeholder="Enter your email here "
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </label>
-          <br />
+        
 
           <label>
             PassWord
@@ -87,7 +81,7 @@ const Register = () => {
             />
           </label>
           <p> {message} </p>
-          <button onClick={handleRegister}> Submit </button>
+          <button onClick={handleLogin}> Login </button>
         </form>
       </div>
     </div>

@@ -10,11 +10,11 @@ const CommentBox = (props) => {
        <h2>Comments</h2>
         {props.selectedPost === props.post._id ? (
           <div>
-            {props.post.comments.map((comment, index) => (
+            {props.post.comments.map((indvidualarrayItem, index) => (
               <div key={index} className="comment">
-                <div className="profile-pic"></div>
-                <b> {comment.user.username} : </b>
-                <span> {comment.comment}</span>
+                <div className="profile-pic"> <img src={indvidualarrayItem.user.profilepIcUrl} alt="no-preview"/> </div>
+                <b> {indvidualarrayItem.user.username} : </b>
+                <span> {indvidualarrayItem.comment}</span>
                 <FaHeart style={{color:"red" , position : "absolute" , right : "10"}}/>
               </div>
             ))}

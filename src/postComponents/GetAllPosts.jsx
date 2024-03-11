@@ -1,44 +1,26 @@
 import React, { useEffect, useState } from "react";
-import "../styles/posts/GetAllPosts.css";
+import "./GetAllPosts.css";
 import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { LuMessageCircle } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
 import CommentBox from "./CommentBox";
-// import AuthenticatedUser from "../authorization/auth";
+import { SlUser } from "react-icons/sl";
 
 const GetAllPosts = () => {
-  // AuthenticatedUser();
-
   const [data, setData] = useState([]);
-  const [heart, setHeart] = useState(false);
+  const [heart, setHeart] = useState(null);
   const [showComment, setShowComment] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const token = sessionStorage.getItem("token");
 
   const handleComment = (postId) => {
     setShowComment(!showComment);
     setSelectedPost(postId);
   };
 
-  // const checkIfLiked = (postId) => {
-  //   const isLiked = localStorage.getItem(`likedPOst${postId}`);
-  
-  //  if(isLiked=== true ){
-   
-  //  }
- 
-  // };
-
-  // useEffect(() => {
-  //   data.forEach((post) => {
-  //     checkIfLiked(post._id);
-     
-  //   });
-  // }, [data]);
-
   const handleLike = async (postId) => {
-    const token = sessionStorage.getItem("token");
     const response = await axios.post(
       `http://localhost:4000/post/likes?postId=${postId}`,
       {},
@@ -49,19 +31,25 @@ const GetAllPosts = () => {
       }
     );
 
+    console.log(response);
     if (response.data.message === `U Liked post _${postId}`) {
-      await localStorage.setItem(`likedPOst${postId}`, "true");
-      setHeart(true)
-     
+      setHeart(postId);
     } else if (response.data.message === `U unliked post_${postId}`) {
-      await localStorage.setItem(`likedPOst${postId}` ,"false");
-      setHeart(false)
+      setHeart(null);
     }
   };
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/posts");
+      const res = await axios.get(
+        "http://localhost:4000/posts",
+        
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
       if (res.data.message === "Posts Found!") {
         setData(res.data.allposts);
         console.log(res);
@@ -89,16 +77,24 @@ const GetAllPosts = () => {
 
             <div className="post">
               <div className="heading">
-                <div className="profile-pic"> </div>{" "}
+                <div className="profile-pic">
+                  {post.author.profilepIcUrl ? (
+                    <img src={post.author.profilepIcUrl} alt="no-preview" />
+                  ) : (
+                    <SlUser style={{ fontSize: "30px" }} />
+                  )}
+                </div>
+
                 <b>
                   {post && post.author
                     ? post.author.username
                     : "Default Author"}
                 </b>
               </div>
-              <b style={{ marginLeft: "45px" }}>
+              <b style={{ marginTop: "10px" }}>
                 {post && post.title ? post.title.toUpperCase() : null}
               </b>
+
               <img
                 onDoubleClick={() => {
                   handleLike(post._id);
@@ -113,7 +109,7 @@ const GetAllPosts = () => {
                     handleLike(post._id);
                   }}
                 >
-                  {heart  ? (
+                  {heart === post._id ? (
                     <FaHeart style={{ color: "red" }} />
                   ) : (
                     <FaRegHeart />

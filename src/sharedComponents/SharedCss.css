@@ -2,8 +2,25 @@
   display: flex;
   background-color: black;
   color: azure;
+  position: relative;
+  height: 70px;
+
+  > span {
+    margin-top: 10px;
+    > a {
+      color: aliceblue;
+      text-decoration: none;
+
+      font-size: 34px;
+      font-weight: 700;
+      margin-left: 20px;
+    }
+  }
 
   > ul {
+    position: absolute;
+    right: 100px;
+    top: 10px;
     list-style-type: none;
     display: flex;
 
