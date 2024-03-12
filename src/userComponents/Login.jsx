@@ -22,15 +22,20 @@ const Register = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const giveMePromise = await axios.post(
+      const res = await axios.post(
         "http://localhost:4000/user/login",
         formData
       );
 
-      if (giveMePromise.data.message === "Logged In") {
-        const token = giveMePromise.data.token
+      if (res.data.message === "Logged In") {
+        // const token = res.data.token
+        // const userId = res.data.userId
+
+        const {token , userId } =res.data
 
         await sessionStorage.setItem('token' , token )
+        await sessionStorage.setItem('userId' , userId )
+
         setMessage("Logged in  SuccesFully!");
         // Form Sanitization
         setFormData({
@@ -40,8 +45,9 @@ const Register = () => {
 
     
         navigate("/");
+
       } else {
-        setMessage(giveMePromise.data.message);
+        setMessage(res.data.message);
       }
     } catch (err) {
       setMessage("Network Error ");

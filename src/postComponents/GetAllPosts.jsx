@@ -14,6 +14,7 @@ const GetAllPosts = () => {
   const [showComment, setShowComment] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const token = sessionStorage.getItem("token");
+  const userId = sessionStorage.getItem("userId")
 
   const handleComment = (postId) => {
     setShowComment(!showComment);
@@ -109,11 +110,9 @@ const GetAllPosts = () => {
                     handleLike(post._id);
                   }}
                 >
-                  {heart === post._id ? (
-                    <FaHeart style={{ color: "red" }} />
-                  ) : (
-                    <FaRegHeart />
-                  )}
+
+                  {post.likeCounts.findIndex((param)=> param.user._id.toString() === userId) > -1 ? <FaHeart style={{ color: "red" }} /> : <FaRegHeart />}
+                
                 </span>
 
                 <span
@@ -137,7 +136,7 @@ const GetAllPosts = () => {
               <b> {post.caption}</b>
             </div>
 
-            <CommentBox post={post} selectedPost={selectedPost} />
+            <CommentBox post={post} selectedPost={selectedPost}  token ={token}/>
           </div>
         ))}
       </div>
