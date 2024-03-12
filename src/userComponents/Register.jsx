@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "./Register.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-light">
+    <div className="register">
       <div className="container">
         <h1> Register</h1>
 
@@ -69,7 +69,7 @@ const Register = () => {
             <input
               type="email"
               name="email" //key
-              placeholder="Enter your email here "
+              placeholder="Enter your Email here "
               value={formData.email}
               onChange={handleChange}
             />
@@ -87,7 +87,9 @@ const Register = () => {
             />
           </label>
           <p> {message} </p>
+          <p className="link">Already Registered? <Link to={"./Login"}>Login Here</Link></p>
           <button onClick={handleRegister}> Submit </button>
+
         </form>
       </div>
     </div>

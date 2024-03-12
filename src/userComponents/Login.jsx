@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "./Login.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-light">
+    <div className="login">
       <div className="container">
         <h1> Login </h1>
 
@@ -81,7 +81,10 @@ const Register = () => {
             />
           </label>
           <p> {message} </p>
-          <button onClick={handleLogin}> Login </button>
+          <p className="link">Don't Have an Account? <Link to={"./Register"}>Register Here</Link></p>
+          <div className="button">
+            <button onClick={handleLogin}> Login </button>
+            </div>
         </form>
       </div>
     </div>
