@@ -5,6 +5,7 @@ import axios from "axios";
 
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
+ 
 
   const submitComment = async (e , postId) => {
     e.preventDefault();
@@ -19,10 +20,14 @@ const CommentBox = (props) => {
           }
         }
       );
-      console.log(res);
 
-      // console.log(e)
-      // console.log(postId)
+
+     if(res.data.message === "comment Added"){
+
+      props.setCommentSucess(!props.commentSucess)
+     }
+
+      
     } catch (err) {
       console.error(err.message);
     }

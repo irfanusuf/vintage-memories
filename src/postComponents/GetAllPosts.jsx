@@ -11,13 +11,17 @@ import { SlUser } from "react-icons/sl";
 const GetAllPosts = () => {
   const [data, setData] = useState([]);
   const [heart, setHeart] = useState(null);
-  const [showComment, setShowComment] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [commentSucess ,setCommentSucess] =useState(false)
+
+
+  
+
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId")
 
   const handleComment = (postId) => {
-    setShowComment(!showComment);
+  
     setSelectedPost(postId);
   };
 
@@ -62,7 +66,7 @@ const GetAllPosts = () => {
 
   useEffect(() => {
     fetchData();
-  }, [heart]);
+  }, [heart ,commentSucess]);
 
   return (
     <div className="main">
@@ -136,7 +140,12 @@ const GetAllPosts = () => {
               <b> {post.caption}</b>
             </div>
 
-            <CommentBox post={post} selectedPost={selectedPost}  token ={token}/>
+            <CommentBox post={post}
+             selectedPost={selectedPost} 
+              token ={token}
+              setCommentSucess = {setCommentSucess}
+              commentSucess = {commentSucess}
+              />
           </div>
         ))}
       </div>
