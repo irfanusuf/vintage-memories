@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Login.scss";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-   
+
   });
 
   const handleChange = (e) => {
@@ -31,10 +33,10 @@ const Register = () => {
         // const token = res.data.token
         // const userId = res.data.userId
 
-        const {token , userId } =res.data
+        const { token, userId } = res.data
 
-        await sessionStorage.setItem('token' , token )
-        await sessionStorage.setItem('userId' , userId )
+        await sessionStorage.setItem('token', token)
+        await sessionStorage.setItem('userId', userId)
 
         setMessage("Logged in  SuccesFully!");
         // Form Sanitization
@@ -43,7 +45,7 @@ const Register = () => {
           password: "",
         });
 
-    
+
         navigate("/");
 
       } else {
@@ -58,40 +60,57 @@ const Register = () => {
   return (
     <div className="login">
       <div className="container">
-        <h1> Login </h1>
 
-        <form>
-          <label>
-            Username
-            <input
-              type="text"
-              name="username" //key
-              placeholder="Enter your Username here "
-              value={formData.username}
-              onChange={handleChange}
-            />
-          </label>
+        <div className="img">
+          <img src={pinstagrammobileimage} alt="pinstagram" />
+        </div>
 
-          <br />
+        {/* <h1> Login </h1> */}
 
-        
+        <div className="form">
 
-          <label>
-            PassWord
-            <input
-              type={showPass ? "text" : "password"}
-              name="password" //key
-              placeholder="Enter your Pass here "
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </label>
-          <p> {message} </p>
-          <p className="link">Don't Have an Account? <Link to={"./Register"}>Register Here</Link></p>
-          <div className="button">
-            <button onClick={handleLogin}> Login </button>
+
+          <form>
+            <div className="logo">
             </div>
-        </form>
+
+            <label>
+              Username
+              <input
+                type="text"
+                name="username" //key
+                placeholder="Enter your Username here "
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label>
+              PassWord
+              <input
+                type={showPass ? "text" : "password"}
+                name="password" //key
+                placeholder="Enter your Pass here "
+                value={formData.password}
+                onChange={handleChange}
+                className="password"
+              />
+            </label>
+
+            {showPass ? <FaEyeSlash className="passwordeye" onClick={() => { setShowPass(!showPass) }} /> : <FaEye className="passwordeye" onClick={() => { setShowPass(!showPass) }} />}
+
+            <p> {message} </p>
+
+            <button onClick={handleLogin}> Log In </button>
+
+          </form>
+
+          <div className="signup">
+            <p className="link">Don't Have an Account? <Link to={"./Register"}>Sign Up</Link></p>
+          </div>
+          
+        </div>
+
       </div>
     </div>
   );
