@@ -4,11 +4,12 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [message, setMessage] = useState("");
+
 
   const [formData, setFormData] = useState({
     username: "",
@@ -33,12 +34,14 @@ const Register = () => {
         // const token = res.data.token
         // const userId = res.data.userId
 
+        toast.success("Logged In Sucessfully")
+
         const { token, userId } = res.data
 
         await sessionStorage.setItem('token', token)
         await sessionStorage.setItem('userId', userId)
 
-        setMessage("Logged in  SuccesFully!");
+    
         // Form Sanitization
         setFormData({
           username: "",
@@ -49,15 +52,19 @@ const Register = () => {
         navigate("/");
 
       } else {
-        setMessage(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (err) {
-      setMessage("Network Error ");
+      toast.error("Network Error ");
       console.log(err);
     }
   };
 
   return (
+<>
+
+    <ToastContainer  position="top-center"/>
+
     <div className="login">
       <div className="container">
 
@@ -99,7 +106,7 @@ const Register = () => {
 
             {showPass ? <FaEyeSlash className="passwordeye" onClick={() => { setShowPass(!showPass) }} /> : <FaEye className="passwordeye" onClick={() => { setShowPass(!showPass) }} />}
 
-            <p> {message} </p>
+          
 
             <button onClick={handleLogin}> Log In </button>
 
@@ -113,6 +120,7 @@ const Register = () => {
 
       </div>
     </div>
+    </>
   );
 };
 

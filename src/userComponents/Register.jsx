@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./Register.scss";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer ,toast } from "react-toastify";
+
 
 const Register = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [message, setMessage] = useState("");
+  
   const [loading, setLoading] = useState(false)
 
   const [username, setUsername] = useState("");
@@ -33,7 +35,9 @@ const Register = () => {
     e.preventDefault();
     try {
       setLoading(true)
+
       const formDataArr = new FormData()
+
       formDataArr.append("username", username)
       formDataArr.append("email", email)
       formDataArr.append("password", password)
@@ -45,7 +49,7 @@ const Register = () => {
       );
 
       if (res.data.message === "user created") {
-        setMessage("User created SuccesFully!");
+          toast.success("User Created !")
         // Form Sanitization
         setEmail("")
         setImage(null)
@@ -54,10 +58,12 @@ const Register = () => {
 
 
       } else {
-        setMessage(res.data.message);
+
+        toast.error(res.data.message)
+       
       }
     } catch (err) {
-      setMessage("Network Error ");
+      toast.error("Network error")
       console.log(err);
     }
     finally {
@@ -67,6 +73,9 @@ const Register = () => {
   };
 
   return (
+
+    <>
+    <ToastContainer position="top-center"/>
     <div className="register">
       <div className="container">
         {/* <h1> Register</h1> */}
@@ -136,9 +145,10 @@ const Register = () => {
               />
             </label>
 
-            {showPass ? <FaEyeSlash className="passwordeye" onClick={()=>{setShowPass(!showPass)}}/> : <FaEye className="passwordeye" onClick={()=>{setShowPass(!showPass)}}/> }
+            {showPass ? <FaEyeSlash className="passwordeye" onClick={()=>{setShowPass(!showPass)}}/> 
+            : <FaEye className="passwordeye" onClick={()=>{setShowPass(!showPass)}}/> }
 
-            <p> {message} </p>
+           
 
             <button onClick={handleRegister} disabled={loading}> Submit </button>
           </form>
@@ -153,6 +163,7 @@ const Register = () => {
 
       </div>
     </div>
+    </>
   );
 };
 

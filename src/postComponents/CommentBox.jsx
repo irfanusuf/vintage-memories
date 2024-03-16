@@ -4,30 +4,29 @@ import { FaHeart } from "react-icons/fa";
 import axios from "axios";
 
 const CommentBox = (props) => {
+  
   const [comment, setComment] = useState("");
- 
 
-  const submitComment = async (e , postId) => {
+
+
+
+  const submitComment = async (e, postId) => {
     e.preventDefault();
 
     try {
       const res = await axios.post(
         `http://localhost:4000/post/comment?postId=${postId}`,
-        {comment : comment},
+        { comment: comment },
         {
-          headers :{
-            token : props.token
-          }
+          headers: {
+            token: props.token,
+          },
         }
       );
 
-
-     if(res.data.message === "comment Added"){
-
-      props.setCommentSucess(!props.commentSucess)
-     }
-
-      
+      if (res.data.message === "comment Added") {
+        props.setCommentSucess(!props.commentSucess);
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -41,20 +40,29 @@ const CommentBox = (props) => {
           <div>
             {props.post.comments.map((indvidualarrayItem, index) => (
               <div key={index} className="comment">
+
+
                 <div className="profile-pic">
-                  {" "}
                   <img
                     src={indvidualarrayItem.user.profilepIcUrl}
                     alt="no-preview"
-                  />{" "}
+                  />
                 </div>
+
                 <b> {indvidualarrayItem.user.username} : </b>
+
+
                 <span> {indvidualarrayItem.comment}</span>
+
                 <FaHeart
                   style={{ color: "red", position: "absolute", right: "10" }}
                 />
+
               </div>
             ))}
+
+
+
             <form>
               <input
                 placeholder="enter your comment here "
@@ -64,9 +72,18 @@ const CommentBox = (props) => {
                   setComment(e.target.value);
                 }}
               />
-              <button onClick={(e) => {submitComment(e ,props.selectedPost)}}> Comment</button>
+              <button
+                onClick={(e) => {
+                  submitComment(e, props.selectedPost);
+                }}
+              >
+                
+                Comment
+              </button>
             </form>
           </div>
+
+
         ) : (
           <Loader />
         )}
