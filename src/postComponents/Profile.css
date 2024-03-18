@@ -1,0 +1,68 @@
+.profile {
+  min-height: 90vh;
+  background-color: bisque;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > .profile-container {
+   min-height: 500px;
+    width: 600px;
+    background-color: black;
+    color: aliceblue;
+    padding: 40px;
+
+    > .profile-heading {
+      display: flex;
+
+      > .container-left {
+        height: 100px;
+      }
+
+      > .container-right {
+        margin-left: 50px;
+        height: 100px;
+
+        > .headings {
+          display: flex;
+          margin-left: 100px;
+
+          > span {
+            margin-right: 40px;
+          }
+        }
+
+        > .counts {
+          display: flex;
+          margin-left: 100px;
+          > p {
+            margin-right: 100px;
+          }
+        }
+      }
+    }
+
+    > .post-container {
+      margin-top: 100px;
+      display: flex;
+      min-height: 300px;
+      flex-wrap: wrap;
+
+      > .single-post {
+        width: 32%;
+        height: 150px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+      > img{
+
+        width: 100%;
+      }
+
+
+      }
+    }
+
+
+
+  }
+}
