@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Loader from "../sharedComponents/Loader";
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+import { SlUser } from "react-icons/sl";
 
 const CommentBox = (props) => {
   
@@ -38,21 +39,22 @@ const CommentBox = (props) => {
         <h2>Comments</h2>
         {props.selectedPost === props.post._id ? (
           <div>
-            {props.post.comments.map((indvidualarrayItem, index) => (
+            {props.post.comments.map((element, index) => (
               <div key={index} className="comment">
 
 
                 <div className="profile-pic">
-                  <img
-                    src={indvidualarrayItem.user.profilepIcUrl}
+                  
+                { element.user.profilepIcUrl ?  <img
+                    src={element.user.profilepIcUrl}
                     alt="no-preview"
-                  />
+                  />  :  <SlUser style={{ fontSize: "30px" }}/>}
                 </div>
 
-                <b> {indvidualarrayItem.user.username} : </b>
+                <b> {element.user.username} : </b>
 
 
-                <span> {indvidualarrayItem.comment}</span>
+                <span> {element.comment}</span>
 
                 <FaHeart
                   style={{ color: "red", position: "absolute", right: "10" }}
