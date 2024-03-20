@@ -1,24 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SharedCss.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
+import { FaHome, FaSearch } from "react-icons/fa";
+import { TiMessages } from "react-icons/ti";
+import AddPost from "../postComponents/AddPost";
 
 // function based component
 const Navbar = () => {
-  return (
-    <div className="navbar">
-      <span><Link to="/">Pinstagram</Link> </span>
+  const navigate = useNavigate();
+  const [showbox, setShowBox] = useState(false);
 
-      <ul>
-        <li>
-          {" "}
-          <Link to="/login"> Login </Link>{" "}
-        </li>
-        <li>
-          {" "}
-          <Link to="/register"> Register </Link>{" "}
-        </li>
-      </ul>
-    </div>
+  const handleAddpost = () => {
+    setShowBox(true);
+  };
+
+  return (
+    <>
+      <div className="navbar">
+        <span>
+          <Link to="/">Polaroid Memories</Link>{" "}
+        </span>
+
+        <div className="add-post">
+          <span>
+            <FaHome
+              onClick={() => {
+                navigate("/");
+              }}
+            />
+          </span>
+          <span>
+            <Link onClick={handleAddpost}>
+              <FaPlus />
+            </Link>
+          </span>
+          <span
+            onClick={() => {
+              navigate("/explore");
+            }}
+          >
+            <FaSearch />
+          </span>
+          <span>
+            <TiMessages />
+          </span>
+        </div>
+
+        <ul>
+          <li>
+            {" "}
+            <Link to="/login"> Login </Link>{" "}
+          </li>
+          <li>
+            {" "}
+            <Link to="/register"> Register </Link>{" "}
+          </li>
+        </ul>
+      </div>
+
+      <AddPost showbox={showbox} setShowBox={setShowBox} />
+    </>
   );
 };
 

@@ -8,9 +8,16 @@ import Footer from "./sharedComponents/Footer";
 import GetAllPosts from "./postComponents/GetAllPosts";
 import NotFound from './sharedComponents/NotFound'
 import Profile  from './postComponents/Profile'
+import AuthenticatedUser from './authorization/auth'
 
 
 const App = () => {
+
+
+  const token = sessionStorage.getItem("token");
+
+
+
   return (
     <>
 
@@ -18,14 +25,14 @@ const App = () => {
       <BrowserRouter>
 
    
-        <Navbar />           
+      { token !== null && <Navbar />    }       
 
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<GetAllPosts/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/explore" element={<GetAllPosts/>} />
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile/>} />
 
 
