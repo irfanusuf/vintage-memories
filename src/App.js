@@ -29,9 +29,9 @@ const App = () => {
 
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={token == null ? <Login /> :<GetAllPosts/> } />
           <Route path="/explore" element={<GetAllPosts/>} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<About />} /> 
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:userId" element={<Profile/>} />
 

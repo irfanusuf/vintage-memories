@@ -5,6 +5,8 @@ import { FaPlus } from "react-icons/fa6";
 import { FaHome, FaSearch } from "react-icons/fa";
 import { TiMessages } from "react-icons/ti";
 import AddPost from "../postComponents/AddPost";
+import { ToastContainer } from "react-toastify";
+
 
 // function based component
 const Navbar = () => {
@@ -17,6 +19,8 @@ const Navbar = () => {
 
   return (
     <>
+
+    <ToastContainer/>
       <div className="navbar">
         <span>
           <Link to="/">Polaroid Memories</Link>{" "}

@@ -19,11 +19,13 @@ const GetAllPosts = () => {
   const [loading, setLoading] = useState(false);
   const [postnotAvailable, setpostnotAvailable] = useState("");
 
+
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
 
   const handleComment = (postId) => {
     setSelectedPost(postId);
+    
   };
 
   const handleLike = async (postId) => {
@@ -72,10 +74,12 @@ const GetAllPosts = () => {
 
 
 
-
   useEffect(() => {
     fetchData();
   }, [heart, commentSucess ,fetchData]);
+
+
+  
 
   return (
     <>
@@ -90,15 +94,17 @@ const GetAllPosts = () => {
               {postnotAvailable}
             </h1>
           )}
+
+
+          
           {loading ? (
             data.map((post) => (
               <div className="card">
-                <div className="likes">
-                  <h2> Likes</h2>
-                </div>
-
+            
                 <div className="post">
                   <div className="heading">
+
+
                     <div className="profile-pic">
                       {post.author.profilepIcUrl ? (
                         <img src={post.author.profilepIcUrl} alt="no-preview" />
@@ -115,9 +121,9 @@ const GetAllPosts = () => {
                       </b>
                     </Link>
                   </div>
-                  <b style={{ marginTop: "10px" }}>
-                    {post && post.title ? post.title.toUpperCase() : null}
-                  </b>
+
+
+                 
 
                   <img
                     onDoubleClick={() => {
@@ -164,6 +170,11 @@ const GetAllPosts = () => {
                     <span>{post.shareCounts.length}</span>
                   </div>
 
+                  
+                  <b style={{ marginTop: "10px" }}>
+                    {post && post.title ? post.title.toUpperCase() : null}
+                  </b>
+
                   <b> {post.caption}</b>
                 </div>
 
@@ -173,6 +184,9 @@ const GetAllPosts = () => {
                   token={token}
                   setCommentSucess={setCommentSucess}
                   commentSucess={commentSucess}
+                  setSelectedPost ={setSelectedPost}
+                  
+               
                 />
               </div>
             ))

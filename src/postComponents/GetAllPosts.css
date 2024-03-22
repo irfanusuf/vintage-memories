@@ -14,40 +14,18 @@
     align-items: center;
     margin-bottom: 20px;
     min-height: 100vh;
-  
 
     > .card {
-      background-color: black;
-      display: flex;
-      width: 90%;
-      border-radius: 10px;
-
-
-
-
-      >.likes{
-        color: aliceblue;
-        margin-top: 60px;
-        flex: 1;
-        >h2{
-          text-align: center;
-
-         
-        }
-      }
-
+      background-color: rgb(15, 15, 15);
+      width: 40%;
+      padding-bottom: 40px;
+      margin-bottom: 30px;
 
       > .post {
         color: aliceblue;
-        flex: 2;
         display: flex;
         flex-direction: column;
-        margin: 30px 0;
-        &:hover {
-          cursor: pointer;
-        }
-        border: 1px solid black;
-        padding: 10px;
+        padding: 15px 20px;
         border-radius: 5px;
 
         > .heading {
@@ -56,16 +34,26 @@
           > .profile-pic {
             width: 50px;
             height: 50px;
-            border: 2px solid white;
+            border: 1px solid white;
             border-radius: 50%;
             margin-right: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            >img{
+            > img {
               width: 50px;
-              
+              height: 50px;
+              border-radius: 50%;
             }
+          }
+        }
+
+        > img {
+          width: 100%;
+          margin-top: 10px;
+          border-radius: 5px;
+          &:hover {
+            cursor: pointer;
           }
         }
 
@@ -84,9 +72,8 @@
           }
         }
 
-        > img {
-          width: 100%;
-          margin-top: 10px;
+        > b {
+          margin-bottom: 5px;
         }
       }
     }
@@ -94,40 +81,91 @@
 }
 
 
-
-
+.display-none{
+  display: none;
+}
 
 .comments {
+  position: fixed;
+  top: 20px;
+  left: 10px;
+  z-index: 1;
+  background-color: rgb(44, 42, 41);
   color: aliceblue;
-  margin-top: 50px;
-  flex: 2;
-  height: 300px;
+  height: 400px;
+  width: 600px;
   border-radius: 5px;
   padding: 0px 10px;
 
+  >.close{
+    position:absolute;
+    right: 10px;
+    top: 10px;
+    font-size: xx-large;
+
+  }
   > h2 {
     text-align: center;
   }
 
-  > div {
-    > .comment {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      position: relative;
-
-      > .profile-pic {
-        width: 50px;
-        height: 50px;
+  > .comment-container {
+    position: relative;
+  
+    > .overflow {
+      
+      padding: 10px;
+      overflow-y:auto;
+      height: 220px;
+      > .comment {
+        margin-bottom: 10px;
         display: flex;
-        justify-content: center;
         align-items: center;
-        border: 2px solid white;
-        border-radius: 50%;
-        margin-right: 20px;
-        >img{
-          width: 50px;
+        position: relative;
+
+        > .profile-pic {
+          width: 30px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 2px solid white;
+          border-radius: 50%;
+          margin-right: 20px;
+          > img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+          }
         }
+      }
+    }
+
+
+
+
+    > .form {
+    
+      position: absolute;
+      left: 10px;
+      margin-top: 10px;
+     
+      
+
+      > input {
+        width: 400px;
+        background-color: rgba(0, 0, 0, 0.107);
+        color: aliceblue;
+        border: 1px solid pink;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      > button {
+        margin-left: 30px;
+        border: 1px solid rgb(209, 29, 225);
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: rgb(231, 99, 121);
+        width: 100px;
       }
     }
   }

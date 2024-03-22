@@ -1,44 +1,52 @@
 .user-add-post {
   position: absolute;
   top: 100px;
-  left: 450px;
-  width: 500px;
+  left: 300px;
+  width: 800px;
   height: 500px;
   border: 1px solid green;
   background-color: antiquewhite;
+  z-index: 1;
 
 
->.form{
+  >.close {
 
+    position: absolute;
+    font-size: 30px;
+    right: 10px;
+    top: 10px;
+  }
+
+  > .form-container {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    /* justify-content: center;
-    align-items: center; */
-    >label{
-        margin-bottom: 10px;
-    }
-    >input{
-       margin-bottom: 10px;
+    padding-top:  50px;
     
-    }
-    >button{
+    justify-content: space-evenly;
 
+    > .selected-image {
+      > img {
+        width: 400px;
+        max-height: 400px;
+      }
+    }
+
+    > .form {
+
+        display: flex;
+        flex-direction: column;
+        
+
+      > label {
+        margin-bottom: 10px;
+      }
+      > input {
+        margin-bottom: 10px;
+      }
+      > button {
         width: 100px;
+      }
     }
+  }
 }
 
-}
 
-
-
-
-
-
-/* .display-none {
-
-
-    display: none;
-
-
-} */
