@@ -31,6 +31,8 @@
         > .heading {
           display: flex;
           align-items: center;
+          position: relative;
+
           > .profile-pic {
             width: 50px;
             height: 50px;
@@ -46,6 +48,23 @@
               border-radius: 50%;
             }
           }
+        
+          >.drop-down{
+            z-index: 1;
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            background-color: grey;
+            right: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            >span{
+              margin-left: 10px;
+            }}
+
+
         }
 
         > img {
@@ -137,6 +156,25 @@
             border-radius: 50%;
           }
         }
+
+        >.drop-down{
+          z-index: 1;
+          position: fixed;
+          width: 100px;
+          height: 40px;
+          background-color: grey;
+          right: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          >span{
+            margin-left: 10px;
+          }
+
+         
+        }
+
       }
     }
 

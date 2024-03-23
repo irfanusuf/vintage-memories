@@ -43,7 +43,7 @@ const AddPost = (props) => {
         }
       );
 
-          console.log(res)
+     
       if(res.data.message === "Post Uploaded"){
 
         toast.success("Post uploaded Sucessfully ")

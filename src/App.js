@@ -8,7 +8,8 @@ import Footer from "./sharedComponents/Footer";
 import GetAllPosts from "./postComponents/GetAllPosts";
 import NotFound from './sharedComponents/NotFound'
 import Profile  from './postComponents/Profile'
-import AuthenticatedUser from './authorization/auth'
+import PostofFollowing from './postComponents/PostofFollowing'
+// import AuthenticatedUser from './authorization/auth'
 
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
 
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={token == null ? <Login /> :<GetAllPosts/> } />
+          <Route path="/" element={token == null ? <Login /> :<PostofFollowing/> } />
           <Route path="/explore" element={<GetAllPosts/>} />
           <Route path="/about" element={<About />} /> 
           <Route path="/register" element={<Register />} />

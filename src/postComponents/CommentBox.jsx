@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+
+import { FaHeart } from "react-icons/fa";
 import { SlUser } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
+import { HiDotsVertical } from "react-icons/hi";
+import { AiFillDelete } from "react-icons/ai";
+import { MdReport } from "react-icons/md";
+
 
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
-  // const [showCommentBox, setShowCommentBox] = useState("");
+  const [showDropdown, setShowDropDown] = useState(null);
+
+  const handleDropDown = (commentId) => {
+    setShowDropDown(commentId);
+  };
 
   const submitComment = async (e, postId) => {
     e.preventDefault();
@@ -31,19 +40,47 @@ const CommentBox = (props) => {
     }
   };
 
+  const handleDelete = async (postId, commentId) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:4000/post/deleteCommment?postId=${postId}&commentId=${commentId}`,
+
+        {},
+        {
+          headers: {
+            token: props.token,
+          },
+        }
+      );
+
+      if (res.data.message === "Comment deleted!") {
+        props.setCommentSucess(!props.commentSucess);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // const handleAbuser = async () => {};
+
   return (
     <>
+     
       <div
         className={
-          props.selectedPost === props.post._id ?
-           "comments animate__animated animate__bounceInLeft" :
-            "display-none "}>
-
-        <IoMdClose className="close" onClick={()=>{props.setSelectedPost(null)}} />
+          props.selectedPost === props.post._id
+            ? "comments animate__animated animate__bounceInUp"
+            : "display-none "
+        }
+      >
+        <IoMdClose
+          className="close"
+          onClick={() => {
+            props.setSelectedPost(null);
+          }}
+        />
 
         <h2>Comments</h2>
-         
-
 
         <div className="comment-container">
           <div className="overflow">
@@ -62,8 +99,54 @@ const CommentBox = (props) => {
                 <span> {element.comment}</span>
 
                 <FaHeart
-                  style={{ color: "red", position: "absolute", right: "10" }}
+                  style={{ color: "red", position: "absolute", right: "30" }}
                 />
+
+                <HiDotsVertical
+                  style={{ fontSize: "22px", position: "absolute", right: "0" }}
+                  onClick={() => {
+                    handleDropDown(element._id);
+                  }}
+                />
+
+                <div
+                  className={
+                    showDropdown === element._id ? "drop-down" : "display-none "
+                  }
+                >
+                  <span>
+                    {" "}
+                    <AiFillDelete
+                      style={{ color: "red", fontSize: "larger" }}
+                      onClick={() => {
+                        handleDelete(props.selectedPost, element._id);
+                      }}
+                    />
+                  </span>
+
+
+                  <span>
+                    {" "}
+                    <MdReport
+                      style={{ color: "red", fontSize: "larger" }}
+                    />{" "}
+                  </span>
+
+                  <span>
+                    
+                    <IoMdClose
+                      onClick={() => {
+                        handleDropDown(null);
+                      }}
+
+                      style={{fontSize: "larger" }}
+                    />
+                  </span>
+
+
+                </div>
+
+
               </div>
             ))}
           </div>

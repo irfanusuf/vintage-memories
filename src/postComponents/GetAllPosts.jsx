@@ -10,6 +10,10 @@ import { SlUser } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import Loader from "../sharedComponents/Loader";
 import { ToastContainer, toast } from "react-toastify";
+import { HiDotsVertical } from "react-icons/hi";
+import { AiFillDelete } from "react-icons/ai";
+import { MdReport } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 const GetAllPosts = () => {
   const [data, setData] = useState([]);
@@ -19,13 +23,38 @@ const GetAllPosts = () => {
   const [loading, setLoading] = useState(false);
   const [postnotAvailable, setpostnotAvailable] = useState("");
 
+  const [dropdown, handleDropDown] = useState(null);
 
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
 
   const handleComment = (postId) => {
     setSelectedPost(postId);
-    
+  };
+
+  const handleDelete = (postId) => {
+    try {
+      const res = axios.post(
+        `http://localhost:4000/post/deletePost?postId=${postId}`,
+        {},
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      
+      console.log(res)
+      // if(res.data.message === "Post Deleted!"){
+      //   toast.success("Post Deleted!")
+      //   setCommentSucess(!commentSucess)
+      // }
+      // else{
+      //   toast.error("Can't del post !")
+      // }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleLike = async (postId) => {
@@ -60,7 +89,7 @@ const GetAllPosts = () => {
       );
       if (res.data.message === "Posts Found!") {
         setData(res.data.allposts);
-      
+
         if (res.data.allposts.length === 0) {
           setpostnotAvailable("NO POSTS AVAILABLE !");
           toast.error("NO POSTS AVAILABLE !");
@@ -72,18 +101,13 @@ const GetAllPosts = () => {
     }
   }, [token]);
 
-
-
   useEffect(() => {
     fetchData();
-  }, [heart, commentSucess ,fetchData]);
-
-
-  
+  }, [heart, commentSucess, fetchData]);
 
   return (
     <>
-    <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" />
 
       <div className="main">
         <h1> Explore </h1>
@@ -95,16 +119,11 @@ const GetAllPosts = () => {
             </h1>
           )}
 
-
-          
           {loading ? (
             data.map((post) => (
               <div className="card">
-            
                 <div className="post">
                   <div className="heading">
-
-
                     <div className="profile-pic">
                       {post.author.profilepIcUrl ? (
                         <img src={post.author.profilepIcUrl} alt="no-preview" />
@@ -120,10 +139,51 @@ const GetAllPosts = () => {
                           : "Default Author"}
                       </b>
                     </Link>
+
+                    <HiDotsVertical
+                      style={{
+                        fontSize: "22px",
+                        position: "absolute",
+                        right: "0",
+                      }}
+                      onClick={() => {
+                        handleDropDown(post._id);
+                      }}
+                    />
+
+                    <div
+                      className={
+                        dropdown === post._id ? "drop-down" : "display-none "
+                      }
+                    >
+                      <span>
+                        {" "}
+                        <AiFillDelete
+                          style={{ color: "red", fontSize: "larger" }}
+                          onClick={() => {
+                            handleDelete(post._id);
+                          }}
+                        />
+                      </span>
+
+                      <span>
+                        {" "}
+                        <MdReport
+                          style={{ color: "red", fontSize: "larger" }}
+                        />{" "}
+                      </span>
+
+                      <span>
+                        {" "}
+                        <IoMdClose
+                          onClick={() => {
+                            handleDropDown(null);
+                          }}
+                          style={{ fontSize: "larger" }}
+                        />
+                      </span>
+                    </div>
                   </div>
-
-
-                 
 
                   <img
                     onDoubleClick={() => {
@@ -148,8 +208,6 @@ const GetAllPosts = () => {
                       )}
                     </span>
 
-
-
                     <span
                       onClick={() => {
                         handleComment(post._id);
@@ -157,7 +215,6 @@ const GetAllPosts = () => {
                     >
                       <LuMessageCircle />
                     </span>
-
 
                     <span>
                       <FaShare />
@@ -170,7 +227,6 @@ const GetAllPosts = () => {
                     <span>{post.shareCounts.length}</span>
                   </div>
 
-                  
                   <b style={{ marginTop: "10px" }}>
                     {post && post.title ? post.title.toUpperCase() : null}
                   </b>
@@ -184,9 +240,7 @@ const GetAllPosts = () => {
                   token={token}
                   setCommentSucess={setCommentSucess}
                   commentSucess={commentSucess}
-                  setSelectedPost ={setSelectedPost}
-                  
-               
+                  setSelectedPost={setSelectedPost}
                 />
               </div>
             ))
