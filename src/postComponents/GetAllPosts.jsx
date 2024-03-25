@@ -19,7 +19,9 @@ const GetAllPosts = () => {
   const [data, setData] = useState([]);
   const [heart, setHeart] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+
   const [commentSucess, setCommentSucess] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [postnotAvailable, setpostnotAvailable] = useState("");
 
@@ -32,9 +34,9 @@ const GetAllPosts = () => {
     setSelectedPost(postId);
   };
 
-  const handleDelete = (postId) => {
+  const handleDelete = async  (postId) => {
     try {
-      const res = axios.post(
+      const res =  await axios.post(
         `http://localhost:4000/post/deletePost?postId=${postId}`,
         {},
         {
@@ -45,13 +47,15 @@ const GetAllPosts = () => {
       );
       
       console.log(res)
-      // if(res.data.message === "Post Deleted!"){
-      //   toast.success("Post Deleted!")
-      //   setCommentSucess(!commentSucess)
-      // }
-      // else{
-      //   toast.error("Can't del post !")
-      // }
+
+    
+      if(res.data.message === "Post Deleted!"){
+        toast.success("Deleted!")
+        setCommentSucess(!commentSucess)
+      }
+      else{
+        toast.error("Can't del post !")
+      }
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +104,9 @@ const GetAllPosts = () => {
       console.log(err);
     }
   }, [token]);
+
+
+  
 
   useEffect(() => {
     fetchData();

@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { HiDotsVertical } from "react-icons/hi";
 import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
+import { toast } from "react-toastify";
 
 
 const CommentBox = (props) => {
@@ -55,6 +56,9 @@ const CommentBox = (props) => {
 
       if (res.data.message === "Comment deleted!") {
         props.setCommentSucess(!props.commentSucess);
+      }
+      else{
+        toast.error(res.data.message)
       }
     } catch (err) {
       console.log(err);
