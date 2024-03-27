@@ -9,18 +9,21 @@ import { ToastContainer } from "react-toastify";
 
 
 // function based component
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
   const [showbox, setShowBox] = useState(false);
 
   const handleAddpost = () => {
     setShowBox(true);
+  
+  props.setOpacity(true)
+    
   };
 
   return (
     <>
 
-    <ToastContainer/>
+    <ToastContainer position="top-center"/>
       <div className="navbar">
         <span>
           <Link to="/">Polaroid Memories</Link>{" "}
@@ -56,7 +59,7 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <AddPost showbox={showbox} setShowBox={setShowBox} />
+      <AddPost showbox={showbox} setShowBox={setShowBox} setOpacity = {props.setOpacity}/>
     </>
   );
 };

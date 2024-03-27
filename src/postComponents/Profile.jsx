@@ -8,6 +8,7 @@ const Profile = () => {
   const { userId } = useParams();
 
   const [user, setUser] = useState({});
+  const [follow , setFollow] = useState(false)
 
   const fetchUser = useCallback(async () => {
     try {
@@ -29,6 +30,26 @@ const Profile = () => {
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  const handleFollow = async (userId) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:4000/user/follow?userId=${userId}`,
+        {},
+        {
+          headers: {
+            token: sessionStorage.getItem("token"),
+          },
+        }
+      );
+
+      setFollow(!follow)
+
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="profile ">
@@ -59,6 +80,18 @@ const Profile = () => {
               <p> {user && user.posts && user.userFollowers.length} </p>
               <p> {user && user.posts && user.userFollowing.length} </p>
             </div>
+
+            <div className="follow-btn">
+              {" "}
+              <button
+                onClick={() => {
+                  handleFollow(user._id);
+                }}
+              >
+                {" "}
+              {follow ? "UnFollow" : "Follow"}
+              </button>{" "}
+            </div>
           </div>
         </div>
 
@@ -67,10 +100,7 @@ const Profile = () => {
             user.posts &&
             user.posts.map((singleElement) => (
               <div className="single-post">
-                <img
-                  src={singleElement.post.imageUrl}
-                  alt="no-preveiew"
-                />
+                <img src={singleElement.post.imageUrl} alt="no-preveiew" />
               </div>
             ))}
         </div>

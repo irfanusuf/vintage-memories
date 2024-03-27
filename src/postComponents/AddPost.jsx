@@ -3,15 +3,18 @@ import "./AddPost.css";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import { useState } from "react";
-import {toast } from "react-toastify";
+import { toast } from "react-toastify";
+import Loader from "../sharedComponents/Loader";
+
 
 const AddPost = (props) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
 
   const token = sessionStorage.getItem("token");
- 
 
   const handleImage = (e) => {
     const file = e.target.files[0]; // incoming selected file ....first one
@@ -28,35 +31,34 @@ const AddPost = (props) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const formdata = new FormData();
       formdata.append("title", title);
       formdata.append("caption", caption);
       formdata.append("image", image);
 
-      const res = await axios.post(
-        `http://localhost:4000/post/new`,
-        formdata,
-        {
-          headers: {
-            token: token,
-          },
-        }
-      );
+      const res = await axios.post(`http://localhost:4000/post/new`, formdata, {
+        headers: {
+          token: token,
+        },
+      });
 
-     
-      if(res.data.message === "Post Uploaded"){
+      if (res.data.message === "Post Uploaded") {
+        setLoading(false);
+        setTitle("");
+        setCaption("");
 
-        toast.success("Post uploaded Sucessfully ")
+        props.setShowBox(false);
+        props.setOpacity(false);
+      } else {
+        toast.error(res.data.message);
       }
-      else {
-        toast.error(res.data.message)
-      }
-      
-
-
-
     } catch (err) {
       console.log(err);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,22 +66,21 @@ const AddPost = (props) => {
     <div
       className={
         props.showbox
-          ? "user-add-post animate__animated animate__backInDown"
-          : "display-none  animate__animated animate__fadeOutDown"
+          ? "user-add-post animate__animated animate__fadeInDown"
+          : "display-none  "
       }
     >
       <IoMdClose
         className="close"
         onClick={() => {
           props.setShowBox(false);
+          props.setOpacity(false);
         }}
       />
 
       <div className="form-container">
-
-
         <div className="selected-image">
-          <img src={image} alt="kuchBhi" />
+          {loading ? <Loader /> : <img src={image} alt= {image} />}
         </div>
 
         <form className="form">
@@ -106,14 +107,12 @@ const AddPost = (props) => {
             }}
           />
 
-          <button onClick={handleUpload}> upload </button>
+          <button onClick={handleUpload} disabled={loading}>
+            {" "}
+            upload{" "}
+          </button>
         </form>
-
-
       </div>
-
-
-
     </div>
   );
 };

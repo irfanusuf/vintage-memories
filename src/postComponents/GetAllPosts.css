@@ -1,3 +1,8 @@
+.opacity{
+  opacity: 0.5;
+}
+
+
 .main {
   background-color: rgb(35, 34, 34);
   display: flex;
@@ -13,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    min-height: 100vh;
+    min-height: 80vh;
 
     > .card {
       background-color: rgb(15, 15, 15);
@@ -47,6 +52,15 @@
               height: 50px;
               border-radius: 50%;
             }
+          }
+
+          >a{
+            text-decoration: none;
+            color: aliceblue;
+            font-weight: 700;
+            font-family:cursive;
+            font-size: larger;
+            
           }
         
           >.drop-down{

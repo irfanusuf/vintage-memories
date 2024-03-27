@@ -33,7 +33,7 @@ const CommentBox = (props) => {
       );
 
       if (res.data.message === "comment Added") {
-        props.setCommentSucess(!props.commentSucess);
+        props.setRender(!props.render);
         setComment(""); // form sanitization
       }
     } catch (err) {
@@ -55,7 +55,7 @@ const CommentBox = (props) => {
       );
 
       if (res.data.message === "Comment deleted!") {
-        props.setCommentSucess(!props.commentSucess);
+        props.setRender(!props.render);
       }
       else{
         toast.error(res.data.message)
@@ -76,7 +76,7 @@ const CommentBox = (props) => {
             ? "comments animate__animated animate__bounceInUp"
             : "display-none "
         }
-      >
+      >              
         <IoMdClose
           className="close"
           onClick={() => {

@@ -15,16 +15,13 @@ import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 
-const GetAllPosts = () => {
+const GetAllPosts = (props) => {
   const [data, setData] = useState([]);
-  const [heart, setHeart] = useState(null);
+  
   const [selectedPost, setSelectedPost] = useState(null);
-
-  const [commentSucess, setCommentSucess] = useState(false);
-
+  const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const [postnotAvailable, setpostnotAvailable] = useState("");
-
   const [dropdown, handleDropDown] = useState(null);
 
   const token = sessionStorage.getItem("token");
@@ -34,10 +31,10 @@ const GetAllPosts = () => {
     setSelectedPost(postId);
   };
 
-  const handleDelete = async  (postId) => {
+  const handleDelete = async  (postId , imgPublicID)  => {
     try {
       const res =  await axios.post(
-        `http://localhost:4000/post/deletePost?postId=${postId}`,
+        `http://localhost:4000/post/deletePost?postId=${postId}&imgPublicID=${imgPublicID}`,
         {},
         {
           headers: {
@@ -51,7 +48,7 @@ const GetAllPosts = () => {
     
       if(res.data.message === "Post Deleted!"){
         toast.success("Deleted!")
-        setCommentSucess(!commentSucess)
+        setRender(!render)
       }
       else{
         toast.error("Can't del post !")
@@ -73,9 +70,9 @@ const GetAllPosts = () => {
     );
 
     if (response.data.message === `U Liked post _${postId}`) {
-      setHeart(postId);
+      setRender(!render);
     } else if (response.data.message === `U unliked post_${postId}`) {
-      setHeart(null);
+      setRender(!render);
     }
   };
 
@@ -96,7 +93,7 @@ const GetAllPosts = () => {
 
         if (res.data.allposts.length === 0) {
           setpostnotAvailable("NO POSTS AVAILABLE !");
-          toast.error("NO POSTS AVAILABLE !");
+         
         }
       }
     } catch (err) {
@@ -110,21 +107,17 @@ const GetAllPosts = () => {
 
   useEffect(() => {
     fetchData();
-  }, [heart, commentSucess, fetchData]);
+  }, [render,  fetchData ,  props.opacity]);
 
   return (
     <>
       <ToastContainer position="top-center" />
 
-      <div className="main">
+      <div className={props.opacity ? "opacity main" :"main"}>
         <h1> Explore </h1>
 
         <div className="container">
-          {data.length === 0 && (
-            <h1 style={{ color: "wheat", marginTop: "300px" }}>
-              {postnotAvailable}
-            </h1>
-          )}
+         
 
           {loading ? (
             data.map((post) => (
@@ -140,11 +133,11 @@ const GetAllPosts = () => {
                     </div>
 
                     <Link to={`/profile/${post.author._id}`}>
-                      <b>
+                     
                         {post && post.author
                           ? post.author.username
                           : "Default Author"}
-                      </b>
+                    
                     </Link>
 
                     <HiDotsVertical
@@ -168,7 +161,7 @@ const GetAllPosts = () => {
                         <AiFillDelete
                           style={{ color: "red", fontSize: "larger" }}
                           onClick={() => {
-                            handleDelete(post._id);
+                            handleDelete(post._id , post.imgPublicID);
                           }}
                         />
                       </span>
@@ -244,16 +237,25 @@ const GetAllPosts = () => {
                 <CommentBox
                   post={post}
                   selectedPost={selectedPost}
-                  token={token}
-                  setCommentSucess={setCommentSucess}
-                  commentSucess={commentSucess}
                   setSelectedPost={setSelectedPost}
+                  token={token}
+                  render={render}
+                  setRender={setRender}
+                  
                 />
               </div>
             ))
           ) : (
             <Loader />
           )}
+
+          {data.length === 0 && (
+            <h1 style={{ color: "wheat", marginTop: "300px" }}>
+              {postnotAvailable}
+            </h1>
+          )}
+
+
         </div>
       </div>
     </>
