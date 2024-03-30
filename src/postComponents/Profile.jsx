@@ -34,7 +34,7 @@ const Profile = () => {
   const handleFollow = async (userId) => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/user/follow?userId=${userId}`,
+        `http://localhost:4000/user/follow?userToFollow=${userId}`,
         {},
         {
           headers: {
@@ -42,7 +42,7 @@ const Profile = () => {
           },
         }
       );
-
+        console.log(res)
       setFollow(!follow)
 
       

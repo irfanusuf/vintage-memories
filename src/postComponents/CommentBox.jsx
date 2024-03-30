@@ -41,10 +41,10 @@ const CommentBox = (props) => {
     }
   };
 
-  const handleDelete = async (postId, commentId) => {
+  const handleDelete = async (postId, commentId , commentUser) => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/post/deleteCommment?postId=${postId}&commentId=${commentId}`,
+        `http://localhost:4000/post/deleteCommment?postId=${postId}&commentId=${commentId}&commentUser=${commentUser}`,
 
         {},
         {
@@ -123,7 +123,7 @@ const CommentBox = (props) => {
                     <AiFillDelete
                       style={{ color: "red", fontSize: "larger" }}
                       onClick={() => {
-                        handleDelete(props.selectedPost, element._id);
+                        handleDelete(props.selectedPost, element._id , element.user._id);
                       }}
                     />
                   </span>

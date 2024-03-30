@@ -48,7 +48,6 @@ const AddPost = (props) => {
         setLoading(false);
         setTitle("");
         setCaption("");
-
         props.setShowBox(false);
         props.setOpacity(false);
       } else {

@@ -16,7 +16,7 @@ const Navbar = (props) => {
   const handleAddpost = () => {
     setShowBox(true);
   
-  props.setOpacity(true)
+    props.setOpacity(true)
     
   };
 
