@@ -4,11 +4,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 import { baseUrl } from "../config/config";
+import Loader from "../sharedComponents/Loader";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [loading ,setLoading] =useState(false)
+  const [message , setMessage] =useState("")
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -23,6 +26,8 @@ const Register = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
+      setMessage("")
       const res = await axios.post(`${baseUrl}/user/login`, formData);
 
       if (res.data.message === "Logged In") { 
@@ -38,17 +43,21 @@ const Register = () => {
 
         navigate("/explore");
       } else {
-        toast.error(res.data.message);
+        setMessage( res.data.message);
       }
     } catch (err) {
-      toast.error("Network Error ");
+      setLoading(false)
+      setMessage("Network Error ");
       console.log(err);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
   return (
     <>
-      <ToastContainer position="top-center" />
+      {/* <ToastContainer position="top-center" /> */}
 
       <div className="login">
         <div className="container">
@@ -61,8 +70,8 @@ const Register = () => {
           <div className="form">
             <form>
               <div className="logo">
-           
-                {/* <h1> Polaroid mems </h1> */}
+           <h1> Login  <br/>To  your Memories </h1>
+                
               </div>
 
               <label>
@@ -109,7 +118,10 @@ const Register = () => {
               
               </label>
 
-              <button onClick={handleLogin}> Log In </button>
+              {loading && <Loader/> }
+              <p style={{color :"red"}}>  {message}</p>
+
+              <button onClick={handleLogin} disabled={loading}> Log In </button>
             </form>
 
             <div className="signup">

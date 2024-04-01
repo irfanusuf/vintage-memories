@@ -5,36 +5,40 @@
   min-height: 100vh;
   background-color: #ffffff;
 
+
   .container {
     background-color: rgb(255, 255, 255);
     display: flex;
     align-items: center;
     padding: 20px;
+    width: 800px;
 
     > .img {
       flex: 1;
-      margin-left: 20px;
+      margin-left: 10px;
       >img{
-        width: 400px;
+        width: 380px;
       }
     }
 
     > .form {
       flex: 1;
-      min-width: 450px;
+      min-width: 420px;
       margin: 30px 10px;
       margin-bottom: 40px;
 
       .logo {
         font-family: cursive;
         font-style: italic;
-        background-image: url(../assets/pinstagrambg.png);
-        background-size: cover;
-        background-position: center;
-        width: 100%;
+        margin-bottom: 0;
+        text-align: center;
+        // background-image: url(../assets/pinstagrambg.png);
+        // background-size: cover;
+        // background-position: center;
+        // width: 100%;
         height: 20vh;
-        padding: 0;
-        margin: 0;
+        // padding: 0;
+        // margin: 0;
       }
 
       > form {
@@ -125,6 +129,12 @@
       
         margin-left: 10px;
        
+      }
+      > .form {
+        flex: 1;
+        width: 380px;
+        margin: 30px 10px;
+        margin-bottom: 40px;
       }
   }
 }

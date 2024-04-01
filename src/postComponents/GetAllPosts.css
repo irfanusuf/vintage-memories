@@ -166,12 +166,12 @@ body{
 .comments {
   position: fixed;
   bottom: 20px;
-  left: 10px;
+  left: 5px;
   z-index: 1;
   background-color: rgb(44, 42, 41);
   color: aliceblue;
   height: 700px;
-  width: 440px;
+  width: 390px;
   border-radius: 5px;
   padding: 0px 10px;
 
@@ -239,7 +239,7 @@ body{
       padding-left: 10px;
 
       > input {
-        width: 280px;
+        width: 260px;
         background-color: rgba(0, 0, 0, 0.107);
         color: aliceblue;
         border: 1px solid pink;
@@ -252,7 +252,7 @@ body{
         padding: 5px 10px;
         border-radius: 5px;
         background-color: rgb(29, 58, 225);
-        width: 100px;
+        width: 80px;
         color: antiquewhite;
         font-weight: 700;
       }
