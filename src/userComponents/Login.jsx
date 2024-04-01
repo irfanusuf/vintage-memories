@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,7 +24,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/login",
+        `${baseUrl}/user/login`,
         formData
       );
 

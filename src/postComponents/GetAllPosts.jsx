@@ -26,6 +26,7 @@ const GetAllPosts = (props) => {
 
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
 
   const handleComment = (postId) => {
     setSelectedPost(postId);
@@ -34,7 +35,7 @@ const GetAllPosts = (props) => {
   const handleDelete = async  (postId , imgPublicID)  => {
     try {
       const res =  await axios.post(
-        `http://localhost:4000/post/deletePost?postId=${postId}&imgPublicID=${imgPublicID}`,
+        `${baseUrl}/post/deletePost?postId=${postId}&imgPublicID=${imgPublicID}`,
         {},
         {
           headers: {
@@ -60,7 +61,7 @@ const GetAllPosts = (props) => {
 
   const handleLike = async (postId) => {
     const response = await axios.post(
-      `http://localhost:4000/post/likes?postId=${postId}`,
+      `${baseUrl}/post/likes?postId=${postId}`,
       {},
       {
         headers: {
@@ -80,7 +81,7 @@ const GetAllPosts = (props) => {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://localhost:4000/posts",
+        `${baseUrl}/posts`,
 
         {
           headers: {

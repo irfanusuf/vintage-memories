@@ -6,14 +6,14 @@ import { SlUser } from "react-icons/sl";
 
 const Profile = () => {
   const { userId } = useParams();
-
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const [user, setUser] = useState({});
   const [follow , setFollow] = useState(false)
 
   const fetchUser = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/user?userId=${userId}`
+        `${baseUrl}/user?userId=${userId}`
       );
 
       if (res.data.message === "user Found") {
@@ -34,7 +34,7 @@ const Profile = () => {
   const handleFollow = async (userId) => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/user/follow?userToFollow=${userId}`,
+        `${baseUrl}/user/follow?userToFollow=${userId}`,
         {},
         {
           headers: {

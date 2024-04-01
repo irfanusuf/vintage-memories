@@ -12,8 +12,8 @@ const AddPost = (props) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
+   
   const token = sessionStorage.getItem("token");
 
   const handleImage = (e) => {
@@ -38,7 +38,7 @@ const AddPost = (props) => {
       formdata.append("caption", caption);
       formdata.append("image", image);
 
-      const res = await axios.post(`http://localhost:4000/post/new`, formdata, {
+      const res = await axios.post(`${baseUrl}/post/new`, formdata, {
         headers: {
           token: token,
         },

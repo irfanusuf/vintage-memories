@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
   const [showDropdown, setShowDropDown] = useState(null);
-
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const handleDropDown = (commentId) => {
     setShowDropDown(commentId);
   };
@@ -23,7 +23,7 @@ const CommentBox = (props) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:4000/post/comment?postId=${postId}`,
+        `${baseUrl}/post/comment?postId=${postId}`,
         { comment: comment },
         {
           headers: {
@@ -44,7 +44,7 @@ const CommentBox = (props) => {
   const handleDelete = async (postId, commentId , commentUser) => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/post/deleteCommment?postId=${postId}&commentId=${commentId}&commentUser=${commentUser}`,
+        `${baseUrl}/post/deleteCommment?postId=${postId}&commentId=${commentId}&commentUser=${commentUser}`,
 
         {},
         {

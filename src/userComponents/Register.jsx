@@ -17,7 +17,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
   const [image, setImage] = useState(null);
-
+  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const handleImage = (e) => {
     const file = e.target.files[0]; // incoming selected file ....first one
     const reader = new FileReader(); // creating an instance of file reader
@@ -44,7 +44,7 @@ const Register = () => {
       formDataArr.append("image", image)
 
       const res = await axios.post(
-        "http://localhost:4000/user/register"
+        `${baseUrl}/user/register`
         , formDataArr
       );
 
