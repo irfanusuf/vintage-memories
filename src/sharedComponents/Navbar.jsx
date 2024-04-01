@@ -26,7 +26,7 @@ const Navbar = (props) => {
     <ToastContainer position="top-center"/>
       <div className="navbar">
         <span>
-          <Link to="/">Polaroid Memories</Link>{" "}
+          <Link to="/">Polaroids </Link>{" "}
         </span>
 
         <div className="add-post">
@@ -54,9 +54,7 @@ const Navbar = (props) => {
           </span>
         </div>
 
-        <ul>
-         
-        </ul>
+      
       </div>
 
       <AddPost showbox={showbox} setShowBox={setShowBox} setOpacity = {props.setOpacity}/>

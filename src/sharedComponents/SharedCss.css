@@ -1,4 +1,5 @@
 .navbar {
+  
   display: flex;
   background-color: black;
   color: azure;
@@ -12,8 +13,9 @@
       color: aliceblue;
       text-decoration: none;
       font-size: 34px;
-      font-weight: 700;
-      margin-left: 20px;
+     font-weight: 800;
+      font-family: cursive;
+      margin-left: 10px;
     }
   }
 
@@ -22,28 +24,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 38px;
+    font-size: 30px;
 
     > span {
       margin-left: 30px;
     }
   }
 
-  > ul {
-    flex: 1;
-    list-style-type: none;
-    display: flex;
 
-    > li {
-      margin-left: 30px;
-
-      > a {
-        color: aliceblue;
-        text-decoration: none;
-        font-size: 18px;
-      }
-    }
-  }
 }
 
 .footer {

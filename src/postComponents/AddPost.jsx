@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../sharedComponents/Loader";
+import { baseUrl } from "../config/config";
 
 
 const AddPost = (props) => {
@@ -12,7 +13,7 @@ const AddPost = (props) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const baseUrl = "https://polaroid-mw3u.onrender.com"
+  
    
   const token = sessionStorage.getItem("token");
 

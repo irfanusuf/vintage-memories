@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer ,toast } from "react-toastify";
+import { baseUrl } from "../config/config";
 
 
 const Register = () => {
@@ -17,7 +18,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
   const [image, setImage] = useState(null);
-  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const handleImage = (e) => {
     const file = e.target.files[0]; // incoming selected file ....first one
     const reader = new FileReader(); // creating an instance of file reader

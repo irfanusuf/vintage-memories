@@ -9,7 +9,7 @@ import GetAllPosts from "./postComponents/GetAllPosts";
 import NotFound from "./sharedComponents/NotFound";
 import Profile from "./postComponents/Profile";
 import PostofFollowing from "./postComponents/PostofFollowing";
-// import AuthenticatedUser from './authorization/auth'
+
 
 const App = () => {
   const token = sessionStorage.getItem("token");
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route
             path="/"
-            element={token == null ? <Login /> : <PostofFollowing />}
+            element={token === null ? <Login /> : <PostofFollowing />}
           />
           <Route path="/explore" element={<GetAllPosts opacity ={opacity}/>} />
           <Route path="/about" element={<About />} />

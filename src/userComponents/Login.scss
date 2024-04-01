@@ -1,127 +1,130 @@
 .login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+
+  .container {
+    background-color: rgb(255, 255, 255);
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: auto -16px;
-    background-color: #ffffff;
+    padding: 20px;
 
+    > .img {
+      flex: 1;
+      margin-left: 20px;
+      >img{
+        width: 400px;
+      }
+    }
 
-    .container {
+    > .form {
+      flex: 1;
+      min-width: 450px;
+      margin: 30px 10px;
+      margin-bottom: 40px;
 
-        background-color: rgb(255, 255, 255);
+      .logo {
+        font-family: cursive;
+        font-style: italic;
+        background-image: url(../assets/pinstagrambg.png);
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 20vh;
+        padding: 0;
+        margin: 0;
+      }
+
+      > form {
         display: flex;
-        width: 70vw;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 0;
+        border: 1px solid rgb(189, 192, 192);
+        padding: 2em;
 
-        .img {
+        > label {
+          color: rgb(57, 58, 58);
+          margin-bottom: 10px;
+          width: 100%;
 
-            // background-image: url(../assets/mobileimg.png);
-            // background-size: cover;
-            // background-position: center;
-            img {
-                width: 30vw;
-                height: 90vh;
+          > .input {
+            display: flex;
+            align-items: center;
+            border: 1px solid #b4b0b0;
+            margin-top: 10px;
+
+            > input {
+              width: 100%;
+              padding: 10px;
+              border: none;
+              border-radius: 2px;
+              font-size: 0.9em;
+              box-sizing: border-box;
+              color: rgb(8, 8, 8);
+              margin-bottom: 0;
             }
-
+            > .passwordeye {
+              margin-right: 10px;
+              margin-left: 10px;
+              cursor: pointer;
+            }
+          }
         }
 
-        .form {
+        > button {
+          margin-top: 2em;
+          padding: 7px;
+          width: 100%;
+          color: white;
+          text-align: center;
+          background-color: #1b99ec;
+          border: #1b99ec 1px solid;
+          border-radius: 10px;
 
-            .logo {
-                background-image: url(../assets/pinstagrambg.png);
-                background-size: cover;
-                background-position: center;
-                width: 100%;
-                height: 20vh;
-                padding: 0;
-                margin: 0;
-            }
-
-            form {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid rgb(189, 192, 192);
-                padding: 2em;
-
-                label {
-                    color: rgb(57, 58, 58);
-                    margin-bottom: 5px;
-
-                    input {
-                        width: 100%;
-                        padding: 10px;
-                        border: 1px solid #b4b0b0;
-                        border-radius: 2px;
-                        font-size: 0.9em;
-                        box-sizing: border-box;
-                        background-color: #d8d4d459;
-                        color: rgb(8, 8, 8);
-                        margin-bottom: 0;
-                    }
-
-                    .password {
-                        position: relative;
-                    }
-                }
-
-                .passwordeye {
-                    position: absolute;
-                    top: 67%;
-                    right: 22em;
-                    transform: translateY(-50%);
-                    cursor: pointer;
-                }
-
-                button {
-                    margin: 0;
-                    margin-top: 2em;
-                    padding: 7px;
-                    width: 100%;
-                    color: white;
-                    text-align: center;
-                    background-color: #1b99ec;
-                    border: #1b99ec 1px solid;
-                    border-radius: 10px;
-
-                    &:hover {
-                        background-color: #2a68ec;
-                        border: #2a68ec 1px solid;
-                        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-
-                    }
-                }
-            }
-
-
-            .signup {
-                border: 1px solid rgb(189, 192, 192);
-                margin-top: 4px;
-                height: 10vh;
-                display: flex;
-                justify-content: center;
-                text-align: center;
-                align-items: center;
-
-                .link {
-                    color: rgb(8, 8, 8);
-                    font-size: 0.8em;
-                    text-align: center;
-                    margin: 0;
-
-                    a {
-                        color: #1b99ec;
-                        font-weight: 700;
-                    }
-                }
-            }
-
-
-
+          &:hover {
+            background-color: #2a68ec;
+            border: #2a68ec 1px solid;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+          }
         }
+      }
+
+      > .signup {
+        border: 1px solid rgb(189, 192, 192);
+        margin-top: 4px;
+        height: 10vh;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+
+        > .link {
+          color: rgb(8, 8, 8);
+          font-size: 0.8em;
+          text-align: center;
+          margin: 0;
+
+          > a {
+            color: #1b99ec;
+            font-weight: 700;
+          }
+        }
+      }
     }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    flex-direction: column-reverse;
+    margin: 10px auto;
+    > .img {
+      
+        margin-left: 10px;
+       
+      }
+  }
 }

@@ -8,12 +8,12 @@ import { HiDotsVertical } from "react-icons/hi";
 import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
 import { toast } from "react-toastify";
+import { baseUrl } from "../config/config";
 
 
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
   const [showDropdown, setShowDropDown] = useState(null);
-  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const handleDropDown = (commentId) => {
     setShowDropDown(commentId);
   };

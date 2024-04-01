@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./Profile.css";
 import { SlUser } from "react-icons/sl";
+import { baseUrl } from "../config/config";
 
 const Profile = () => {
   const { userId } = useParams();
-  const baseUrl = "https://polaroid-mw3u.onrender.com"
   const [user, setUser] = useState({});
   const [follow , setFollow] = useState(false)
 

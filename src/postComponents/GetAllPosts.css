@@ -1,24 +1,26 @@
-.opacity{
+.opacity {
   opacity: 0.5;
 }
-
-
+body{
+   background-color: rgb(35, 34, 34);
+}
 .main {
-  background-color: rgb(35, 34, 34);
+ 
   display: flex;
   flex-direction: column;
-
   > h1 {
     text-align: center;
     color: aliceblue;
   }
 
   > .container {
+ 
+    margin-bottom: 20px;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-    min-height: 80vh;
+
 
     > .card {
       background-color: rgb(15, 15, 15);
@@ -54,16 +56,15 @@
             }
           }
 
-          >a{
+          > a {
             text-decoration: none;
             color: aliceblue;
             font-weight: 700;
-            font-family:cursive;
+            font-family: cursive;
             font-size: larger;
-            
           }
-        
-          >.drop-down{
+
+          > .drop-down {
             z-index: 1;
             position: absolute;
             width: 100px;
@@ -74,11 +75,10 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            >span{
+            > span {
               margin-left: 10px;
-            }}
-
-
+            }
+          }
         }
 
         > img {
@@ -114,7 +114,52 @@
 }
 
 
-.display-none{
+
+@media screen and (max-width: 1400px) {
+  .main {
+    > .container {
+      > .card {
+        width: 50%;
+
+        > .post {
+          padding: 10px 10px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .main {
+    > .container {
+      > .card {
+        width: 70%;
+
+        > .post {
+          padding: 10px 10px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .main {
+    > .container {
+      
+      
+      > .card {
+        width: 100%;
+
+        > .post {
+          padding: 10px 10px;
+        }
+      }
+    }
+  }
+}
+
+.display-none {
   display: none;
 }
 
@@ -130,12 +175,11 @@
   border-radius: 5px;
   padding: 0px 10px;
 
-  >.close{
-    position:absolute;
+  > .close {
+    position: absolute;
     right: 10px;
     top: 10px;
     font-size: xx-large;
-
   }
   > h2 {
     text-align: center;
@@ -143,11 +187,10 @@
 
   > .comment-container {
     position: relative;
-  
+
     > .overflow {
-      
       padding: 10px;
-      overflow-y:auto;
+      overflow-y: auto;
       height: 220px;
       > .comment {
         margin-bottom: 10px;
@@ -171,7 +214,7 @@
           }
         }
 
-        >.drop-down{
+        > .drop-down {
           z-index: 1;
           position: fixed;
           width: 100px;
@@ -182,26 +225,17 @@
           align-items: center;
           justify-content: center;
           border-radius: 8px;
-          >span{
+          > span {
             margin-left: 10px;
           }
-
-         
         }
-
       }
     }
 
-
-
-
     > .form {
-    
       position: absolute;
       left: 10px;
       margin-top: 10px;
-     
-      
 
       > input {
         width: 400px;

@@ -14,10 +14,10 @@ import { HiDotsVertical } from "react-icons/hi";
 import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
+import { baseUrl } from "../config/config";
 
 const GetAllPosts = (props) => {
   const [data, setData] = useState([]);
-  
   const [selectedPost, setSelectedPost] = useState(null);
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,8 +26,6 @@ const GetAllPosts = (props) => {
 
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
-  const baseUrl = "https://polaroid-mw3u.onrender.com"
-
   const handleComment = (postId) => {
     setSelectedPost(postId);
   };
