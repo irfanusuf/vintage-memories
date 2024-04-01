@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+const authenticated = () => {
+  
+  const isLoggedIn = localStorage.getItem('token'); // Example: checking local storage for authentication token
 
-const AuthenticatedUser = async () => {
-  const navigate = useNavigate();
-  const token = sessionStorage.getItem("token");
-
-  useEffect(() => {
-
-    if (token === "") {
-      navigate("/login");
-    }
-  }, [token , navigate]);
-
-   
+  if (isLoggedIn) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
-export default AuthenticatedUser;
+export default authenticated

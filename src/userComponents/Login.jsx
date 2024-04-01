@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "./Login.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import pinstagrammobileimage from "../assets/pinstagrammobileimage.PNG";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import { baseUrl } from "../config/config";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [message, setMessage] = useState("");
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-   
   });
 
   const handleChange = (e) => {
@@ -22,69 +23,106 @@ const Register = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const giveMePromise = await axios.post(
-        "http://localhost:4000/user/login",
-        formData
-      );
+      const res = await axios.post(`${baseUrl}/user/login`, formData);
 
-      if (giveMePromise.data.message === "Logged In") {
-        const token = giveMePromise.data.token
+      if (res.data.message === "Logged In") { 
+        const { token, userId } = res.data;
+        await localStorage.setItem("token", token);
+        await localStorage.setItem("userId", userId);
 
-        await sessionStorage.setItem('token' , token )
-        setMessage("Logged in  SuccesFully!");
         // Form Sanitization
         setFormData({
           username: "",
           password: "",
         });
 
-    
-        navigate("/");
+        navigate("/explore");
       } else {
-        setMessage(giveMePromise.data.message);
+        toast.error(res.data.message);
       }
     } catch (err) {
-      setMessage("Network Error ");
+      toast.error("Network Error ");
       console.log(err);
     }
   };
 
   return (
-    <div className="register-light">
-      <div className="container">
-        <h1> Login </h1>
+    <>
+      <ToastContainer position="top-center" />
 
-        <form>
-          <label>
-            Username
-            <input
-              type="text"
-              name="username" //key
-              placeholder="Enter your Username here "
-              value={formData.username}
-              onChange={handleChange}
-            />
-          </label>
+      <div className="login">
+        <div className="container">
 
-          <br />
 
-        
+        <div className="img">
+            <img src={pinstagrammobileimage} alt="pinstagram" />
+          </div>
+          
+          <div className="form">
+            <form>
+              <div className="logo">
+           
+                {/* <h1> Polaroid mems </h1> */}
+              </div>
 
-          <label>
-            PassWord
-            <input
-              type={showPass ? "text" : "password"}
-              name="password" //key
-              placeholder="Enter your Pass here "
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </label>
-          <p> {message} </p>
-          <button onClick={handleLogin}> Login </button>
-        </form>
+              <label>
+                Username
+                <div className="input"> 
+                   <input
+                  type="text"
+                  name="username" //key
+                  placeholder="Enter your Username here "
+                  value={formData.username}
+                  onChange={handleChange}
+                />
+                </div>
+               
+              </label>
+
+              <label>
+                PassWord
+
+                <div className="input"> 
+                  <input
+                  type={showPass ? "text" : "password"}
+                  name="password" //key
+                  placeholder="Enter your Pass here "
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                {showPass ? (
+                  <FaEyeSlash
+                    className="passwordeye"
+                    onClick={() => {
+                      setShowPass(!showPass);
+                    }}
+                  />
+                ) : (
+                  <FaEye
+                    className="passwordeye"
+                    onClick={() => {
+                      setShowPass(!showPass);
+                    }}
+                  />
+                )}
+                </div>
+              
+              </label>
+
+              <button onClick={handleLogin}> Log In </button>
+            </form>
+
+            <div className="signup">
+              <p className="link">
+                Don't Have an Account? <Link to={"/Register"}>Sign Up</Link>
+              </p>
+            </div>
+          </div>
+
+         
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./GetAllPosts.css";
 import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
@@ -7,41 +7,60 @@ import { LuMessageCircle } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
 import CommentBox from "./CommentBox";
 import { SlUser } from "react-icons/sl";
+import { Link } from "react-router-dom";
 import Loader from "../sharedComponents/Loader";
-import Likes from "./Likes";
+import { ToastContainer, toast } from "react-toastify";
+import { HiDotsVertical } from "react-icons/hi";
+import { AiFillDelete } from "react-icons/ai";
+import { MdReport } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
+import { baseUrl } from "../config/config";
+import IsAuthenticated from "../authorization/IsAuthenticated"
 
-const GetAllPosts = () => {
+const GetAllPosts = (props) => {
+  IsAuthenticated()
   const [data, setData] = useState([]);
-  const [heart, setHeart] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedLikes, setSelectedLikes] =useState(null)
-  const [loading, setLoading] = useState(true);
-  const [text, setText] = useState("");
-  const [comment, setComment] = useState("");
-  const [commentSucess, setcommentSucess] = useState(false);
-
-  const token = sessionStorage.getItem("token");
-
-  const showComment = (postId) => {
-    
-      setSelectedPost(postId);
-    
-   
-    
+  const [render, setRender] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [postnotAvailable, setpostnotAvailable] = useState("");
+  const [dropdown, handleDropDown] = useState(null);
+  const token = localStorage.getItem("token");
+  const userId =localStorage.getItem("userId");
+  const handleComment = (postId) => {
+    setSelectedPost(postId);
   };
 
-  const showLikes = (postId) => {
-    if(selectedLikes===null){
-      setSelectedLikes(postId);
-    }
-    else if(selectedLikes===postId){
-      setSelectedLikes(null);
+  const handleDelete = async  (postId , imgPublicID)  => {
+    try {
+      const res =  await axios.post(
+        `${baseUrl}/post/deletePost?postId=${postId}&imgPublicID=${imgPublicID}`,
+        {},
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      
+      console.log(res)
+
+    
+      if(res.data.message === "Post Deleted!"){
+        toast.success("Deleted!")
+        setRender(!render)
+      }
+      else{
+        toast.error("Can't del post !")
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   const handleLike = async (postId) => {
     const response = await axios.post(
-      `http://localhost:4000/post/likes?postId=${postId}`,
+      `${baseUrl}/post/likes?postId=${postId}`,
       {},
       {
         headers: {
@@ -50,22 +69,18 @@ const GetAllPosts = () => {
       }
     );
 
-    console.log(response);
     if (response.data.message === `U Liked post _${postId}`) {
-      setHeart(true)
-      
+      setRender(!render);
     } else if (response.data.message === `U unliked post_${postId}`) {
-      setHeart(false);
+      setRender(!render);
     }
   };
 
-  const submitComment = async (e, postId) => {
-    e.preventDefault();
-
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:4000/post/comment?postId=${postId} `,
-        { comment: comment },
+      setLoading(true);
+      const res = await axios.get(
+        `${baseUrl}/posts`,
 
         {
           headers: {
@@ -73,148 +88,177 @@ const GetAllPosts = () => {
           },
         }
       );
+      if (res.data.message === "Posts Found!") {
+        setData(res.data.allposts);
 
-      if (response.data.message === "comment Added") {
-        setComment("");
-        setcommentSucess(!commentSucess);
+        if (res.data.allposts.length === 0) {
+          setpostnotAvailable("NO POSTS AVAILABLE !");
+         
+        }
       }
     } catch (err) {
-      console.error(err.message);
+      setLoading(false);
+      console.log(err);
     }
-  };
+  }, [token]);
+
+
+  
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          "http://localhost:4000/posts",
-
-          {
-            headers: {
-              token: token,
-            },
-          }
-        );
-        if (res.data.message === "Posts Found!") {
-          setData(res.data.allposts);
-          if (res.data.allposts.length === 0) {
-            setText("NO POSTS AVAILABLE!");
-          }
-        }
-      } catch (err) {
-        if (
-          err.message === "Request failed with status code 403" ||
-          "Network Error"
-        ) {
-          setLoading(false);
-        }
-        console.error(err.message);
-      }
-    };
     fetchData();
-  }, [heart, commentSucess]);
+  }, [render,  fetchData ,  props.opacity]);
 
   return (
-    <div className="main">
-      <h1> Explore </h1>
+    <>
+      <ToastContainer position="top-center" />
 
-      <div className="container">
-        {text && (
-          <h1 style={{ color: "white", marginTop: "300px" }}> {text} </h1>
-        )}
+      <div className={props.opacity ? "opacity main" :"main"}>
+        <h1> Explore Memories</h1>
 
-        {!loading ? (
-          <Loader />
-        ) : (
-          data.map((post) => (
-            <div className="card">
+        <div className="container">
+         
 
+          {loading ? (
+            data.map((post) => (
+              <div className="card">
+                <div className="post">
+                  <div className="heading">
+                    <div className="profile-pic">
+                      {post.author.profilepIcUrl ? (
+                        <img src={post.author.profilepIcUrl} alt="no-preview" />
+                      ) : (
+                        <SlUser style={{ fontSize: "30px" }} />
+                      )}
+                    </div>
 
-             {selectedLikes === post._id && <Likes post={post} />} 
+                    <Link to={`/profile/${post.author._id}`}>
+                     
+                        {post && post.author
+                          ? post.author.username
+                          : "Default Author"}
+                    
+                    </Link>
 
-              <div className="post">
-                <div className="heading">
-                  <div className="profile-pic">
-                    {post.author.profilepIcUrl ? (
-                      <img src={post.author.profilepIcUrl} alt="no-preview" />
-                    ) : (
-                      <SlUser style={{ fontSize: "20px" }} />
-                    )}
+                    <HiDotsVertical
+                      style={{
+                        fontSize: "22px",
+                        position: "absolute",
+                        right: "0",
+                      }}
+                      onClick={() => {
+                        handleDropDown(post._id);
+                      }}
+                    />
+
+                    <div
+                      className={
+                        dropdown === post._id ? "drop-down" : "display-none "
+                      }
+                    >
+                      <span>
+                        {" "}
+                        <AiFillDelete
+                          style={{ color: "red", fontSize: "larger" }}
+                          onClick={() => {
+                            handleDelete(post._id , post.imgPublicID);
+                          }}
+                        />
+                      </span>
+
+                      <span>
+                        {" "}
+                        <MdReport
+                          style={{ color: "red", fontSize: "larger" }}
+                        />{" "}
+                      </span>
+
+                      <span>
+                        {" "}
+                        <IoMdClose
+                          onClick={() => {
+                            handleDropDown(null);
+                          }}
+                          style={{ fontSize: "larger" }}
+                        />
+                      </span>
+                    </div>
                   </div>
 
-                  <b>
-                    {post && post.author
-                      ? post.author.username
-                      : "Default Author"}
-
-
-                      
-                  </b>
-                </div>
-                <b style={{ marginTop: "10px" }}>
-                  {post && post.title ? post.title.toUpperCase() : null}
-                </b>
-
-                <img
-                  onDoubleClick={() => {
-                    handleLike(post._id);
-                  }}
-                  src={post.imageUrl}
-                  alt="preview"
-                />
-
-                <div className="icons">
-                  <span
-                    onClick={() => {
+                  <img
+                    onDoubleClick={() => {
                       handleLike(post._id);
                     }}
-                  >
-                      {post.author.likedPosts.indexOf( post._id ) > -1  ? <FaHeart style={{ color: "red" }} /> : <FaRegHeart /> }
+                    src={post.imageUrl}
+                    alt="preview"
+                  />
 
-                    {/* {heart === post._id ? (
-                      <FaHeart style={{ color: "red" }} />
-                    ) : (
-                      <FaRegHeart />
-                    )} */}
-                  </span>
+                  <div className="icons">
+                    <span
+                      onClick={() => {
+                        handleLike(post._id);
+                      }}
+                    >
+                      {post.likeCounts.findIndex(
+                        (param) => param.user._id.toString() === userId
+                      ) > -1 ? (
+                        <FaHeart style={{ color: "red" }} />
+                      ) : (
+                        <FaRegHeart />
+                      )}
+                    </span>
 
-                  <span
-                    onClick={() => {
-                      showComment(post._id);
-                    }}
-                  >
-                    <LuMessageCircle />
-                  </span>
-                  <span>
-                    <FaShare />
-                  </span>
+                    <span
+                      onClick={() => {
+                        handleComment(post._id);
+                      }}
+                    >
+                      <LuMessageCircle />
+                    </span>
+
+                    <span>
+                      <FaShare />
+                    </span>
+                  </div>
+
+                  <div className="counts">
+                    <span>{post.likeCounts.length}</span>
+                    <span>{post.comments.length}</span>
+                    <span>{post.shareCounts.length}</span>
+                  </div>
+
+                  <b style={{ marginTop: "10px" }}>
+                    {post && post.title ? post.title.toUpperCase() : null}
+                  </b>
+
+                  <b> {post.caption}</b>
                 </div>
 
-                <div className="counts">
-                  <span>{post.likeCounts.length}</span>
-                  <span>{post.comments.length}</span>
-                  <span>{post.shareCounts.length}</span>
-                  <span   onClick={() => {
-                      showLikes(post._id);
-                    }} > Show likes </span>
-                </div>
-
-                <b> {post.caption}</b>
+                <CommentBox
+                  post={post}
+                  selectedPost={selectedPost}
+                  setSelectedPost={setSelectedPost}
+                  token={token}
+                  render={render}
+                  setRender={setRender}
+                  
+                />
               </div>
+            ))
+          ) : (
+            <Loader />
+          )}
 
-              <CommentBox
-                post={post}
-                selectedPost={selectedPost}
-                submitComment={submitComment}
-                comment={comment}
-                setComment={setComment}
-              />
-            </div>
-          ))
-        )}
+          {data.length === 0 && (
+            <h1 style={{ color: "wheat", marginTop: "300px" }}>
+              {postnotAvailable}
+            </h1>
+          )}
+
+
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,62 +1,175 @@
-import React from "react";
-import Loader from "../sharedComponents/Loader";
+import React, { useState } from "react";
+import axios from "axios";
+
 import { FaHeart } from "react-icons/fa";
 import { SlUser } from "react-icons/sl";
+import { IoMdClose } from "react-icons/io";
+import { HiDotsVertical } from "react-icons/hi";
+import { AiFillDelete } from "react-icons/ai";
+import { MdReport } from "react-icons/md";
+import { toast } from "react-toastify";
+import { baseUrl } from "../config/config";
 
 
 const CommentBox = (props) => {
-  
- 
+  const [comment, setComment] = useState("");
+  const [showDropdown, setShowDropDown] = useState(null);
+  const handleDropDown = (commentId) => {
+    setShowDropDown(commentId);
+  };
+
+  const submitComment = async (e, postId) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        `${baseUrl}/post/comment?postId=${postId}`,
+        { comment: comment },
+        {
+          headers: {
+            token: props.token,
+          },
+        }
+      );
+
+      if (res.data.message === "comment Added") {
+        props.setRender(!props.render);
+        setComment(""); // form sanitization
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleDelete = async (postId, commentId , commentUser) => {
+    try {
+      const res = await axios.post(
+        `${baseUrl}/post/deleteCommment?postId=${postId}&commentId=${commentId}&commentUser=${commentUser}`,
+
+        {},
+        {
+          headers: {
+            token: props.token,
+          },
+        }
+      );
+
+      if (res.data.message === "Comment deleted!") {
+        props.setRender(!props.render);
+      }
+      else{
+        toast.error(res.data.message)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // const handleAbuser = async () => {};
 
   return (
     <>
-      <div className="comment-box">
+     
+      <div
+        className={
+          props.selectedPost === props.post._id
+            ? "comments animate__animated animate__bounceInUp"
+            : "display-none "
+        }
+      >              
+        <IoMdClose
+          className="close"
+          onClick={() => {
+            props.setSelectedPost(null);
+          }}
+        />
+
         <h2>Comments</h2>
-        {props.selectedPost === props.post._id ? (
-          <div className="comments">
-            {props.post.comments.map((indvidualarrayItem, index) => (
+
+        <div className="comment-container">
+          <div className="overflow">
+            {props.post.comments.map((element, index) => (
               <div key={index} className="comment">
                 <div className="profile-pic">
-                  {indvidualarrayItem.user.profilepIcUrl ? (
-                    <img
-                      src={indvidualarrayItem.user.profilepIcUrl}
-                      alt="no-preview"
-                    />
+                  {element.user.profilepIcUrl ? (
+                    <img src={element.user.profilepIcUrl} alt="no-preview" />
                   ) : (
                     <SlUser style={{ fontSize: "20px" }} />
                   )}
                 </div>
-                <b> {indvidualarrayItem.user.username} : </b>
-                <span> {indvidualarrayItem.comment}</span>
+
+                <b> {element.user.username} : </b>
+
+                <span> {element.comment}</span>
+
                 <FaHeart
-                  style={{ color: "red", position: "absolute", right: "10" }}
+                  style={{ color: "red", position: "absolute", right: "40" }}
                 />
+
+                <HiDotsVertical
+                  style={{ fontSize: "22px", position: "absolute", right: "10" }}
+                  onClick={() => {
+                    handleDropDown(element._id);
+                  }}
+                />
+
+                <div
+                  className={
+                    showDropdown === element._id ? "drop-down" : "display-none "
+                  }
+                >
+                  <span>
+                    {" "}
+                    <AiFillDelete
+                      style={{ color: "red", fontSize: "larger" }}
+                      onClick={() => {
+                        handleDelete(props.selectedPost, element._id , element.user._id);
+                      }}
+                    />
+                  </span>
+
+
+                  <span>
+                    {" "}
+                    <MdReport
+                      style={{ color: "red", fontSize: "larger" }}
+                    />{" "}
+                  </span>
+
+                  <span>
+                    
+                    <IoMdClose
+                      onClick={() => {
+                        handleDropDown(null);
+                      }}
+
+                      style={{fontSize: "larger" }}
+                    />
+                  </span>
+
+
+                </div>
+
+
               </div>
             ))}
           </div>
-        ) : (
-          <Loader />
-        )}
 
-        <div className="comment-input">
-          <form>
+          <form className="form">
             <input
-              type="text"
-              value={props.comment}
+              placeholder="enter your comment here "
+              value={comment}
               name="comment"
               onChange={(e) => {
-                props.setComment(e.target.value);
+                setComment(e.target.value);
               }}
             />
-
             <button
               onClick={(e) => {
-                props.submitComment(e, props.selectedPost);
+                submitComment(e, props.selectedPost);
               }}
-              disabled={props.selectedPost === null}
             >
-              {" "}
-              Comment{" "}
+              Comment
             </button>
           </form>
         </div>
