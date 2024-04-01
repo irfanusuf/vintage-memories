@@ -9,29 +9,29 @@ import GetAllPosts from "./postComponents/GetAllPosts";
 import NotFound from "./sharedComponents/NotFound";
 import Profile from "./postComponents/Profile";
 import PostofFollowing from "./postComponents/PostofFollowing";
-
+import authenticated from "./authorization/auth";
+import MenuBar from "./sharedComponents/MenuBar";
 
 const App = () => {
-  const token = sessionStorage.getItem("token");
-  const [opacity , setOpacity] = useState(false)
+  const [opacity, setOpacity] = useState(false);
+  console.log(authenticated());
 
   return (
     <>
       <BrowserRouter>
-        {token !== null && <Navbar setOpacity = {setOpacity} />}
+        <Navbar setOpacity={setOpacity} />
 
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route
-            path="/"
-            element={token === null ? <Login /> : <PostofFollowing />}
-          />
-          <Route path="/explore" element={<GetAllPosts opacity ={opacity}/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/explore" element={<GetAllPosts opacity={opacity} />} />
+          <Route path="/postOfFollowing" element={<PostofFollowing />} />
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
-
+        <MenuBar setOpacity={setOpacity} />
         <Footer />
       </BrowserRouter>
     </>

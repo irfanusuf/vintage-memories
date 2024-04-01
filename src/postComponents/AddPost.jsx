@@ -84,7 +84,7 @@ const AddPost = (props) => {
         </div>
 
         <form className="form">
-          <label> Choose Image </label>
+          <label> Add Your Memory </label>
 
           <input type="file" name="image" onChange={handleImage} />
           <label> Title</label>

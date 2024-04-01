@@ -25,14 +25,10 @@ const Register = () => {
     try {
       const res = await axios.post(`${baseUrl}/user/login`, formData);
 
-      if (res.data.message === "Logged In") {
-        // const token = res.data.token
-        // const userId = res.data.userId
+      if (res.data.message === "Logged In") { 
         const { token, userId } = res.data;
-        // toast.success("Logged In Sucessfully")
-
-        await sessionStorage.setItem("token", token);
-        await sessionStorage.setItem("userId", userId);
+        await localStorage.setItem("token", token);
+        await localStorage.setItem("userId", userId);
 
         // Form Sanitization
         setFormData({
@@ -118,7 +114,7 @@ const Register = () => {
 
             <div className="signup">
               <p className="link">
-                Don't Have an Account? <Link to={"./Register"}>Sign Up</Link>
+                Don't Have an Account? <Link to={"/Register"}>Sign Up</Link>
               </p>
             </div>
           </div>

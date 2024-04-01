@@ -15,17 +15,18 @@ import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { baseUrl } from "../config/config";
+import IsAuthenticated from "../authorization/IsAuthenticated"
 
 const GetAllPosts = (props) => {
+  IsAuthenticated()
   const [data, setData] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const [postnotAvailable, setpostnotAvailable] = useState("");
   const [dropdown, handleDropDown] = useState(null);
-
-  const token = sessionStorage.getItem("token");
-  const userId = sessionStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const userId =localStorage.getItem("userId");
   const handleComment = (postId) => {
     setSelectedPost(postId);
   };
@@ -113,7 +114,7 @@ const GetAllPosts = (props) => {
       <ToastContainer position="top-center" />
 
       <div className={props.opacity ? "opacity main" :"main"}>
-        <h1> Explore </h1>
+        <h1> Explore Memories</h1>
 
         <div className="container">
          

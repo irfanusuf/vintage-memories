@@ -2,7 +2,7 @@ import React from 'react'
 
 const PostofFollowing = () => {
   return (
-    <div>PostofFollowing</div>
+    <div style={{minHeight:"90vh"}}>PostofFollowing</div>
   )
 }
 

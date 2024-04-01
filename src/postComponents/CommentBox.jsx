@@ -103,11 +103,11 @@ const CommentBox = (props) => {
                 <span> {element.comment}</span>
 
                 <FaHeart
-                  style={{ color: "red", position: "absolute", right: "30" }}
+                  style={{ color: "red", position: "absolute", right: "40" }}
                 />
 
                 <HiDotsVertical
-                  style={{ fontSize: "22px", position: "absolute", right: "0" }}
+                  style={{ fontSize: "22px", position: "absolute", right: "10" }}
                   onClick={() => {
                     handleDropDown(element._id);
                   }}

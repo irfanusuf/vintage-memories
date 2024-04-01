@@ -129,11 +129,11 @@ body{
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
   .main {
     > .container {
       > .card {
-        width: 70%;
+        width: 80%;
 
         > .post {
           padding: 10px 10px;
@@ -165,13 +165,13 @@ body{
 
 .comments {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   left: 10px;
   z-index: 1;
   background-color: rgb(44, 42, 41);
   color: aliceblue;
-  height: 400px;
-  width: 600px;
+  height: 700px;
+  width: 440px;
   border-radius: 5px;
   padding: 0px 10px;
 
@@ -186,17 +186,19 @@ body{
   }
 
   > .comment-container {
-    position: relative;
+    
 
     > .overflow {
-      padding: 10px;
+     
       overflow-y: auto;
-      height: 220px;
+      height: 550px;
+
       > .comment {
         margin-bottom: 10px;
         display: flex;
         align-items: center;
         position: relative;
+       
 
         > .profile-pic {
           width: 30px;
@@ -233,12 +235,11 @@ body{
     }
 
     > .form {
-      position: absolute;
-      left: 10px;
       margin-top: 10px;
+      padding-left: 10px;
 
       > input {
-        width: 400px;
+        width: 280px;
         background-color: rgba(0, 0, 0, 0.107);
         color: aliceblue;
         border: 1px solid pink;
@@ -246,12 +247,14 @@ body{
         border-radius: 5px;
       }
       > button {
-        margin-left: 30px;
-        border: 1px solid rgb(209, 29, 225);
+        margin-left: 10px;
+        border: 1px solid rgb(29, 58, 225);
         padding: 5px 10px;
         border-radius: 5px;
-        background-color: rgb(231, 99, 121);
+        background-color: rgb(29, 58, 225);
         width: 100px;
+        color: antiquewhite;
+        font-weight: 700;
       }
     }
   }

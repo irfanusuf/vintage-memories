@@ -10,7 +10,7 @@ import authenticated from "../authorization/auth";
 
 
 // function based component
-const Navbar = (props) => {
+const MenuBar = (props) => {
  
   const navigate = useNavigate();
   const [showbox, setShowBox] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = (props) => {
 
 
 
-   { authenticated() &&  <div className="navbar">
+   { authenticated() &&  <div className="menubar">
       
         <div className="add-post">
 
@@ -70,4 +70,4 @@ const Navbar = (props) => {
   );
 };
 
-export default Navbar;
+export default MenuBar;
