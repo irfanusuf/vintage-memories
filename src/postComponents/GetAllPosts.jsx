@@ -88,8 +88,10 @@ const GetAllPosts = (props) => {
           },
         }
       );
+
+      const reverseArray = res.data.allposts.reverse()
       if (res.data.message === "Posts Found!") {
-        setData(res.data.allposts);
+        setData(reverseArray);
 
         if (res.data.allposts.length === 0) {
           setpostnotAvailable("NO POSTS AVAILABLE !");

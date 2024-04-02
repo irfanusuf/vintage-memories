@@ -38,7 +38,7 @@ const Profile = () => {
         {},
         {
           headers: {
-            token: sessionStorage.getItem("token"),
+            token: localStorage.getItem("token"),
           },
         }
       );
