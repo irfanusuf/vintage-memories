@@ -9,12 +9,11 @@ import GetAllPosts from "./postComponents/GetAllPosts";
 import NotFound from "./sharedComponents/NotFound";
 import Profile from "./postComponents/Profile";
 import PostofFollowing from "./postComponents/PostofFollowing";
-import authenticated from "./authorization/auth";
 import MenuBar from "./sharedComponents/MenuBar";
 
 const App = () => {
   const [opacity, setOpacity] = useState(false);
-  console.log(authenticated());
+ 
 
   return (
     <>
@@ -31,6 +30,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
+        
         <MenuBar setOpacity={setOpacity} />
         <Footer />
       </BrowserRouter>

@@ -1,11 +1,11 @@
 .opacity {
   opacity: 0.5;
 }
-body{
-   background-color: rgb(35, 34, 34);
+body {
+  background-color: rgb(35, 34, 34);
 }
+
 .main {
- 
   display: flex;
   flex-direction: column;
   > h1 {
@@ -14,13 +14,11 @@ body{
   }
 
   > .container {
- 
     margin-bottom: 20px;
     min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-
 
     > .card {
       background-color: rgb(15, 15, 15);
@@ -113,13 +111,25 @@ body{
   }
 }
 
-
-
 @media screen and (max-width: 1400px) {
   .main {
     > .container {
       > .card {
         width: 50%;
+
+        > .post {
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .main {
+    > .container {
+      > .card {
+        width: 65%;
 
         > .post {
           padding: 10px 10px;
@@ -146,8 +156,6 @@ body{
 @media screen and (max-width: 500px) {
   .main {
     > .container {
-      
-      
       > .card {
         width: 100%;
 
@@ -171,7 +179,7 @@ body{
   background-color: rgb(44, 42, 41);
   color: aliceblue;
   height: 700px;
-  width: 390px;
+  width: 400px;
   border-radius: 5px;
   padding: 0px 10px;
 
@@ -186,10 +194,7 @@ body{
   }
 
   > .comment-container {
-    
-
     > .overflow {
-     
       overflow-y: auto;
       height: 550px;
 
@@ -198,7 +203,6 @@ body{
         display: flex;
         align-items: center;
         position: relative;
-       
 
         > .profile-pic {
           width: 30px;
@@ -255,6 +259,42 @@ body{
         width: 80px;
         color: antiquewhite;
         font-weight: 700;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .comments {
+    width: 360px;
+    height: 650px;
+
+    > .comment-container {
+      > .overflow {
+        height: 520px;
+      }
+      > .form {
+        > input {
+          width: 220px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .comments {
+    width: 345px;
+    height: 500px;
+
+    > .comment-container {
+      > .overflow {
+        height: 350px;
+      }
+      > .form {
+        > input {
+          width: 220px;
+        }
       }
     }
   }

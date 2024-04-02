@@ -5,7 +5,6 @@ import { FaPlus } from "react-icons/fa6";
 import { FaHome, FaSearch } from "react-icons/fa";
 import { TiMessages } from "react-icons/ti";
 import AddPost from "../postComponents/AddPost";
-import { ToastContainer } from "react-toastify";
 import authenticated from "../authorization/auth";
 
 
@@ -14,6 +13,7 @@ const Navbar = (props) => {
  
   const navigate = useNavigate();
   const [showbox, setShowBox] = useState(false);
+  
   
   const handleAddpost = () => {
     setShowBox(true);
@@ -24,9 +24,6 @@ const Navbar = (props) => {
 
   return (
     <>
-
-    <ToastContainer position="top-center"/>
-
 
 
    { authenticated() &&  <div className="navbar">
