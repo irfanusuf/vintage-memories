@@ -81,6 +81,7 @@ body {
 
         > img {
           width: 100%;
+          max-height: 800px;
           margin-top: 10px;
           border-radius: 5px;
           &:hover {
@@ -201,8 +202,8 @@ body {
       > .comment {
         margin-bottom: 10px;
         display: flex;
-        align-items: center;
         position: relative;
+       
 
         > .profile-pic {
           width: 30px;
@@ -220,13 +221,25 @@ body {
           }
         }
 
+       
+        span{
+          width: 300px;
+          padding-top: 5px;
+          text-justify:newspaper;
+          >b{
+            color: aqua;
+            margin-right: 5px;
+            
+          }
+        }
+
         > .drop-down {
           z-index: 1;
           position: fixed;
           width: 100px;
           height: 40px;
           background-color: grey;
-          right: 15px;
+          right: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -235,6 +248,8 @@ body {
             margin-left: 10px;
           }
         }
+
+
       }
     }
 

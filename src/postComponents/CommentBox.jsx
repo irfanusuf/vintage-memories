@@ -9,20 +9,25 @@ import { AiFillDelete } from "react-icons/ai";
 import { MdReport } from "react-icons/md";
 import { toast } from "react-toastify";
 import { baseUrl } from "../config/config";
+import Loader from "../sharedComponents/Loader";
+
 
 
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
   const [showDropdown, setShowDropDown] = useState(null);
+  const [loading , setLoading] =useState(false)
   const handleDropDown = (commentId) => {
     setShowDropDown(commentId);
   };
-
+ 
   const submitComment = async (e, postId) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
+      setLoading(true)
+      if(comment !== ""){
+         const res = await axios.post(
         `${baseUrl}/post/comment?postId=${postId}`,
         { comment: comment },
         {
@@ -36,8 +41,12 @@ const CommentBox = (props) => {
         props.setRender(!props.render);
         setComment(""); // form sanitization
       }
+      }
+     
     } catch (err) {
       console.error(err.message);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -65,6 +74,7 @@ const CommentBox = (props) => {
     }
   };
 
+  // const reverseComments = props.post.comments.reverse()
   // const handleAbuser = async () => {};
 
   return (
@@ -98,16 +108,16 @@ const CommentBox = (props) => {
                   )}
                 </div>
 
-                <b> {element.user.username} : </b>
+               <span><b> @{element.user.username} </b> {element.comment} </span> 
 
-                <span> {element.comment}</span>
+                
 
                 <FaHeart
-                  style={{ color: "red", position: "absolute", right: "40" }}
+                  style={{ color: "red", paddingRight:"10px" ,paddingTop :"10px"}}
                 />
 
                 <HiDotsVertical
-                  style={{ fontSize: "22px", position: "absolute", right: "10" }}
+                  style={{ fontSize: "22px" ,paddingTop :"7px"}}
                   onClick={() => {
                     handleDropDown(element._id);
                   }}
@@ -155,6 +165,8 @@ const CommentBox = (props) => {
             ))}
           </div>
 
+          {loading && <Loader/>}
+
           <form className="form">
             <input
               placeholder="enter your comment here "
@@ -168,6 +180,7 @@ const CommentBox = (props) => {
               onClick={(e) => {
                 submitComment(e, props.selectedPost);
               }}
+              disabled={loading && comment ===""}
             >
               Comment
             </button>

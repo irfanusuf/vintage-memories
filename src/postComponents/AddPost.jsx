@@ -3,7 +3,6 @@ import "./AddPost.css";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import Loader from "../sharedComponents/Loader";
 import { baseUrl } from "../config/config";
 
@@ -13,9 +12,10 @@ const AddPost = (props) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [message , setMessage] =useState(" ")
   
    
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const handleImage = (e) => {
     const file = e.target.files[0]; // incoming selected file ....first one
@@ -33,6 +33,7 @@ const AddPost = (props) => {
 
     try {
       setLoading(true);
+      setMessage(" ")
 
       const formdata = new FormData();
       formdata.append("title", title);
@@ -52,7 +53,7 @@ const AddPost = (props) => {
         props.setShowBox(false);
         props.setOpacity(false);
       } else {
-        toast.error(res.data.message);
+        setMessage(res.data.message);
       }
     } catch (err) {
       console.log(err);
@@ -106,10 +107,10 @@ const AddPost = (props) => {
               setCaption(e.target.value);
             }}
           />
-
+          <p> {message} </p>
           <button onClick={handleUpload} disabled={loading}>
-            {" "}
-            upload{" "}
+        
+            Upload Memory
           </button>
         </form>
       </div>
