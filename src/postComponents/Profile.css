@@ -3,7 +3,6 @@
   background-color: rgb(46, 46, 46);
   display: flex;
   justify-content: center;
-  
 
   > .profile-container {
     min-height: 500px;
@@ -14,7 +13,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
 
-    >.header{
+    > .header {
       display: flex;
       height: 30px;
       padding-right: 10px;
@@ -31,7 +30,7 @@
 
       > .container-left {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         width: 100px;
         align-items: center;
 
@@ -55,10 +54,8 @@
       > .container-right {
         margin-left: 100px;
 
-
         > .headings {
           display: flex;
-        
 
           > span {
             margin-left: 40px;
@@ -67,7 +64,7 @@
 
         > .counts {
           display: flex;
-          
+
           > p {
             margin-left: 40px;
             margin-right: 60px;
@@ -75,11 +72,10 @@
         }
 
         > .btns {
-            display: flex;
-            justify-content: space-around;
+          display: flex;
+          justify-content: space-around;
 
           > button {
-        
             background-color: rgba(37, 37, 195, 0.845);
             color: aliceblue;
             border: 1px solid rgba(37, 37, 195, 0.845);
@@ -92,10 +88,9 @@
       }
     }
 
-    >.bio{
+    > .bio {
       height: 100px;
       padding: 20px;
-     
     }
 
     > .post {
@@ -117,35 +112,26 @@
   }
 }
 
-
-@media screen and (max-width : 500px) {
+@media screen and (max-width: 500px) {
   .profile {
-   
-  
     > .profile-container {
       min-height: 500px;
       width: 100%;
-      padding: 0px; 
+      padding: 0px;
       margin-top: 0px;
       margin-bottom: 0px;
 
-      >.header{
-      
+      > .header {
         margin-bottom: 10px;
         margin-top: 10px;
-       
       }
-  
+
       > .profile-heading {
-        
-     
-  
         > .container-left {
-          display: flex; 
+          display: flex;
           flex-direction: column;
           align-items: center;
-     
-  
+
           > .profile-pic {
             display: flex;
             justify-content: center;
@@ -154,7 +140,7 @@
             border: 1px solid white;
             width: 70px;
             height: 70px;
-  
+
             > img {
               width: 100%;
               height: 100%;
@@ -162,33 +148,28 @@
             }
           }
         }
-  
+
         > .container-right {
           margin-left: 20px;
-         
-  
+
           > .headings {
             display: flex;
-      
-  
+
             > span {
               margin-left: 30px;
             }
           }
-  
+
           > .counts {
-            display: flex;
-       
+         
+
             > p {
-              
               margin-left: 40px;
               margin-right: 40px;
             }
           }
-  
+
           > .btns {
-          
-        
             > button {
               background-color: rgba(37, 37, 195, 0.845);
               color: aliceblue;
@@ -202,21 +183,18 @@
         }
       }
 
-      >.bio{
+      > .bio {
         height: 120px;
         padding: 10px;
-        
       }
-  
+
       > .post {
         display: flex;
         min-height: 300px;
         flex-wrap: wrap;
         padding: 5px;
-       
-  
+
         > .single-post {
-         
           height: 150px;
           > img {
             width: 100%;
@@ -226,6 +204,4 @@
       }
     }
   }
- 
-  
 }

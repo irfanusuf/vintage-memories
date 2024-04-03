@@ -80,7 +80,7 @@ const Profile = () => {
             </div>
 
             <div className="counts">
-              {" "}
+            
               <p> {user && user.posts && user.posts.length} </p>
               <p> {user && user.posts && user.userFollowers.length} </p>
               <p> {user && user.posts && user.userFollowing.length} </p>
