@@ -114,7 +114,7 @@ const Profile = () => {
             user.posts &&
             user.posts.map((singleElement) => (
               <div className="single-post">
-                <img src={singleElement.post.imageUrl} alt="no-preveiew" />
+                <img src={singleElement.post && singleElement.post.imageUrl} alt="no-preveiew" />
               </div>
             ))}
         </div>
