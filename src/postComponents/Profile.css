@@ -56,7 +56,7 @@
           }
         }
         > .counts {
-          display: flex;
+         
           > p {
             margin-left: 40px;
             margin-right: 60px;
@@ -64,7 +64,7 @@
         }
 
         > .btns {
-          display: flex;
+         
           justify-content: space-around;
           > button {
             background-color: rgba(37, 37, 195, 0.845);
@@ -122,6 +122,7 @@
           }
 
           > .counts {
+            
             > p {
               margin-left: 40px;
               margin-right: 40px;
@@ -155,3 +156,11 @@
     }
   }
 }
+
+
+.counts{
+  display: flex;
+
+}
+
+.btns{display: flex;}
