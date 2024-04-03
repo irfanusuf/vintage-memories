@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Profile.css";
 import { SlUser } from "react-icons/sl";
 import { baseUrl } from "../config/config";
+import { HiDotsVertical } from "react-icons/hi";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -54,7 +55,11 @@ const Profile = () => {
   return (
     <div className="profile ">
       <div className="profile-container">
+
+        <div className="header"> <HiDotsVertical/> </div>
+
         <div className="profile-heading">
+
           <div className="container-left">
             <div className="profile-pic">
               {user.profilepIcUrl ? (
@@ -81,18 +86,27 @@ const Profile = () => {
               <p> {user && user.posts && user.userFollowing.length} </p>
             </div>
 
-            <div className="follow-btn">
-              {" "}
+            <div className="btns">
+             
               <button
                 onClick={() => {
                   handleFollow(user._id);
                 }}
               >
-                {" "}
+                
               {follow ? "UnFollow" : "Follow"}
-              </button>{" "}
+              </button>
+
+              <button> Message</button>
             </div>
           </div>
+
+
+
+        </div>
+
+        <div className="bio">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo enim aliquid quam consequuntur recusandae ipsa doloribus exercitationem vero voluptates, magnam voluptatem ex totam culpa facere corporis iure officia cumque ipsum.
         </div>
 
         <div className="post">
@@ -104,6 +118,7 @@ const Profile = () => {
               </div>
             ))}
         </div>
+
       </div>
     </div>
   );

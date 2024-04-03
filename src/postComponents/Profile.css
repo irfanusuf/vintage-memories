@@ -1,24 +1,37 @@
 .profile {
-  min-height: 90vh;
-  background-color: bisque;
+  min-height: 100vh;
+  background-color: rgb(46, 46, 46);
   display: flex;
   justify-content: center;
-  align-items: center;
+  
 
   > .profile-container {
     min-height: 500px;
     width: 600px;
     background-color: black;
     color: aliceblue;
-    padding: 40px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    >.header{
+      display: flex;
+      height: 30px;
+      padding-right: 10px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      justify-content: flex-end;
+      font-size: x-large;
+    }
 
     > .profile-heading {
       display: flex;
+      height: 120px;
+      padding: 5px;
 
       > .container-left {
         display: flex;
-        flex-direction: column;
-        height: 200px;
+        flex-direction: column; 
         width: 100px;
         align-items: center;
 
@@ -31,7 +44,7 @@
           width: 70px;
           height: 70px;
 
-          >img{
+          > img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
@@ -40,65 +53,179 @@
       }
 
       > .container-right {
+        margin-left: 100px;
 
-        margin-left: 50px;
-        height: 100px;
 
         > .headings {
           display: flex;
-          margin-left: 100px;
+        
 
           > span {
-            margin-right: 40px;
+            margin-left: 40px;
           }
         }
 
         > .counts {
           display: flex;
-          margin-left: 100px;
+          
           > p {
-            margin-right: 100px;
+            margin-left: 40px;
+            margin-right: 60px;
           }
         }
 
-        >.follow-btn{
-       
-          margin-left: 100px;
-          
-          >button{
+        > .btns {
+            display: flex;
+            justify-content: space-around;
+
+          > button {
+        
             background-color: rgba(37, 37, 195, 0.845);
             color: aliceblue;
             border: 1px solid rgba(37, 37, 195, 0.845);
-            width: 200px;
+            width: 150px;
             border-radius: 3px;
-            padding: 5px 10px;
+            padding: 8px 10px;
             cursor: pointer;
           }
         }
       }
     }
 
+    >.bio{
+      height: 100px;
+      padding: 20px;
+     
+    }
 
-
-    > .post{
-      margin-top: 100px;
+    > .post {
       display: flex;
       min-height: 300px;
+      justify-content: space-between;
       flex-wrap: wrap;
 
       > .single-post {
-        width: 32%;
-        height: 150px;
-        margin-bottom: 5px;
-        margin-left: 5px;
+        width: 33%;
+        height: 180px;
+        margin-bottom: 3px;
         > img {
           width: 100%;
-          height: 150px;
-
+          height: 180px;
         }
       }
     }
-
-    
   }
+}
+
+
+@media screen and (max-width : 500px) {
+  .profile {
+   
+  
+    > .profile-container {
+      min-height: 500px;
+      width: 100%;
+      padding: 0px; 
+      margin-top: 0px;
+      margin-bottom: 0px;
+
+      >.header{
+      
+        margin-bottom: 10px;
+        margin-top: 10px;
+       
+      }
+  
+      > .profile-heading {
+        
+     
+  
+        > .container-left {
+          display: flex; 
+          flex-direction: column;
+          align-items: center;
+     
+  
+          > .profile-pic {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid white;
+            width: 70px;
+            height: 70px;
+  
+            > img {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+            }
+          }
+        }
+  
+        > .container-right {
+          margin-left: 20px;
+         
+  
+          > .headings {
+            display: flex;
+      
+  
+            > span {
+              margin-left: 30px;
+            }
+          }
+  
+          > .counts {
+            display: flex;
+       
+            > p {
+              
+              margin-left: 40px;
+              margin-right: 40px;
+            }
+          }
+  
+          > .btns {
+          
+        
+            > button {
+              background-color: rgba(37, 37, 195, 0.845);
+              color: aliceblue;
+              border: 1px solid rgba(37, 37, 195, 0.845);
+              width: 120px;
+              border-radius: 3px;
+              padding: 5px 10px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      >.bio{
+        height: 120px;
+        padding: 10px;
+        
+      }
+  
+      > .post {
+        display: flex;
+        min-height: 300px;
+        flex-wrap: wrap;
+        padding: 5px;
+       
+  
+        > .single-post {
+         
+          height: 150px;
+          > img {
+            width: 100%;
+            height: 150px;
+          }
+        }
+      }
+    }
+  }
+ 
+  
 }

@@ -90,12 +90,14 @@ const GetAllPosts = (props) => {
       );
 
       const reverseArray = res.data.allposts.reverse()
+     // const randomizeArray = // set of predefined rules
+
+
       if (res.data.message === "Posts Found!") {
         setData(reverseArray);
 
         if (res.data.allposts.length === 0) {
-          setpostnotAvailable("NO POSTS AVAILABLE !");
-         
+          setpostnotAvailable("NO POSTS AVAILABLE !"); 
         }
       }
     } catch (err) {
